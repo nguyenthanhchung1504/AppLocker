@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="text_main_password">#C4CEE6</color>
+    <color name="text_splash_screen">#1361CB</color>
+    <color name="color_list_app">#D9DFEB</color>
+    <color name="text_app">#2C2C2B</color>
+</resources>

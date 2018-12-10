@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">App Locker</string>
+    <string name="ok">OK</string>
+    <string name="protect_your_privacy_and_secrets">Protect your privacy and secrets!</string>
+    <string name="create_your_password">Create your password</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="not_correct_password_create">Password does not match password created</string>
+    <string name="please_enter_your_password">Please enter your password</string>
+</resources>
