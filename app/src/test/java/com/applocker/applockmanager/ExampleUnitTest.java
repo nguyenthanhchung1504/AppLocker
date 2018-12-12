@@ -1,4 +1,4 @@
-package com.applocker;
+package com.applocker.applockmanager;
 
 import org.junit.Test;
 

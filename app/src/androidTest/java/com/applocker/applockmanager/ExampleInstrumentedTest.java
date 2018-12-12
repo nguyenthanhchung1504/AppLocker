@@ -1,4 +1,4 @@
-package com.applocker;
+package com.applocker.applockmanager;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

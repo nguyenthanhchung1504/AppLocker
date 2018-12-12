@@ -18,12 +18,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 
 import com.applocker.R;
 import com.applocker.applockmanager.adapter.ListAppAdapter;
 import com.applocker.applockmanager.databases.DatabaseManager;
 import com.applocker.applockmanager.models.App;
 import com.applocker.applockmanager.service.LockAppService;
+import com.applocker.applockmanager.utils.Constant;
+import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,7 @@ public class ListApplicationActivity extends AppCompatActivity {
     RecyclerView lstApplication;
     ProgressDialog dialog;
     public static DatabaseManager mDBManager;
-
+    private static SharedPreferenceUtils utils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +51,30 @@ public class ListApplicationActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
         }
-
+        else {
+            Intent intent = new Intent(this, LockAppService.class);
+            startService(intent);
+        }
+        utils = new SharedPreferenceUtils(this);
         mDBManager = new DatabaseManager(this);
         new MyAsynTask().execute();
 
 
-        Intent intent = new Intent(this, LockAppService.class);
-        startService(intent);
+        utils.setValue(Constant.STATUS,true);
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!checkUsageAccess()) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, LockAppService.class);
+            startService(intent);
+        }
     }
 
     private void getAllAppFromDevide() {
@@ -95,7 +113,7 @@ public class ListApplicationActivity extends AppCompatActivity {
 
             //show dialog
             dialog = new ProgressDialog(ListApplicationActivity.this);
-            dialog.setMessage("Loading data...");
+            dialog.setMessage(getString(R.string.loading_data));
             dialog.show();
         }
 
@@ -144,6 +162,8 @@ public class ListApplicationActivity extends AppCompatActivity {
         }
     }
 
+
+
     void setAdapter() {
         adapter = new ListAppAdapter(this, mAppsInDevice);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -175,5 +195,16 @@ public class ListApplicationActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_BACK){
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }
+        return true;
     }
 }

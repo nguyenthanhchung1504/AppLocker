@@ -2,13 +2,15 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background_lock"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_1"
     tools:context="com.applocker.applockmanager.activities.CreatePinActivity">
 
-
-    <TextView
+    <Button
+        android:background="@android:color/transparent"
+        android:gravity="center"
         android:id="@+id/txt_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,43 +48,22 @@
             android:id="@+id/img_zero"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_delete"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_visible"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_zero"
-            app:layout_constraintEnd_toEndOf="@+id/img_zero"
-            app:layout_constraintStart_toStartOf="@+id/img_zero"
-            app:layout_constraintTop_toTopOf="@+id/img_zero" />
-
         <ImageView
             android:id="@+id/img_delete"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_zero"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:src="@drawable/ic_del"
-            app:layout_constraintBottom_toBottomOf="@+id/img_delete"
-            app:layout_constraintEnd_toEndOf="@+id/img_delete"
-            app:layout_constraintStart_toStartOf="@+id/img_delete"
-            app:layout_constraintTop_toTopOf="@+id/img_delete" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -98,67 +79,35 @@
             android:id="@+id/img_four"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_five"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_four"
-            app:layout_constraintEnd_toEndOf="@+id/img_four"
-            app:layout_constraintStart_toStartOf="@+id/img_four"
-            app:layout_constraintTop_toTopOf="@+id/img_four" />
+
 
         <ImageView
             android:id="@+id/img_five"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_six"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_four"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_five"
-            app:layout_constraintEnd_toEndOf="@+id/img_five"
-            app:layout_constraintStart_toStartOf="@+id/img_five"
-            app:layout_constraintTop_toTopOf="@+id/img_five" />
 
         <ImageView
             android:id="@+id/img_six"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_five"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="6"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_six"
-            app:layout_constraintEnd_toEndOf="@+id/img_six"
-            app:layout_constraintStart_toStartOf="@+id/img_six"
-            app:layout_constraintTop_toTopOf="@+id/img_six" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -175,67 +124,35 @@
             android:id="@+id/img_seven"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_eight"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_seven"
-            app:layout_constraintEnd_toEndOf="@+id/img_seven"
-            app:layout_constraintStart_toStartOf="@+id/img_seven"
-            app:layout_constraintTop_toTopOf="@+id/img_seven" />
 
         <ImageView
             android:id="@+id/img_eight"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_nine"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_seven"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_eight"
-            app:layout_constraintEnd_toEndOf="@+id/img_eight"
-            app:layout_constraintStart_toStartOf="@+id/img_eight"
-            app:layout_constraintTop_toTopOf="@+id/img_eight" />
+
 
         <ImageView
             android:id="@+id/img_nine"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_eight"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_nine"
-            app:layout_constraintEnd_toEndOf="@+id/img_nine"
-            app:layout_constraintStart_toStartOf="@+id/img_nine"
-            app:layout_constraintTop_toTopOf="@+id/img_nine" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -251,89 +168,61 @@
             android:id="@+id/img_one"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_two"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_one"
-            app:layout_constraintEnd_toEndOf="@+id/img_one"
-            app:layout_constraintStart_toStartOf="@+id/img_one"
-            app:layout_constraintTop_toTopOf="@+id/img_one" />
+
 
         <ImageView
             android:id="@+id/img_two"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/img_three"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_one"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_two"
-            app:layout_constraintEnd_toEndOf="@+id/img_two"
-            app:layout_constraintStart_toStartOf="@+id/img_two"
-            app:layout_constraintTop_toTopOf="@+id/img_two" />
+
 
         <ImageView
             android:id="@+id/img_three"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/circle_textview"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_two"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_25sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_three"
-            app:layout_constraintEnd_toEndOf="@+id/img_three"
-            app:layout_constraintStart_toStartOf="@+id/img_three"
-            app:layout_constraintTop_toTopOf="@+id/img_three" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_create_your_password">
 
         <EditText
-            android:textColor="@android:color/white"
+
+            android:id="@+id/edt1"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:layout_marginStart="@dimen/_55sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/circle_textview"
             android:gravity="center"
             android:inputType="textPassword"
-            android:id="@+id/edt1"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginStart="@dimen/_55sdp"
-            android:layout_marginLeft="@dimen/_55sdp"
-            android:background="@drawable/circle_textview"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/edt2"
             app:layout_constraintHorizontal_bias="0.5"
@@ -342,13 +231,16 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:textColor="@android:color/white"
+            android:id="@+id/edt2"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/circle_textview"
             android:gravity="center"
             android:inputType="textPassword"
-            android:id="@+id/edt2"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:background="@drawable/circle_textview"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/edt3"
             app:layout_constraintHorizontal_bias="0.5"
@@ -356,13 +248,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:textColor="@android:color/white"
+            android:id="@+id/edt3"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/circle_textview"
             android:gravity="center"
             android:inputType="textPassword"
-            android:id="@+id/edt3"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:background="@drawable/circle_textview"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/edt4"
             app:layout_constraintHorizontal_bias="0.5"
@@ -370,13 +265,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:textColor="@android:color/white"
+            android:id="@+id/edt4"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/circle_textview"
             android:gravity="center"
             android:inputType="numberPassword"
-            android:id="@+id/edt4"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:background="@drawable/circle_textview"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/edt5"
             app:layout_constraintHorizontal_bias="0.5"
@@ -384,15 +282,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:textColor="@android:color/white"
+            android:id="@+id/edt5"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_23sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_55sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/circle_textview"
             android:gravity="center"
             android:inputType="numberPassword"
-            android:id="@+id/edt5"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginEnd="@dimen/_55sdp"
-            android:layout_marginRight="@dimen/_55sdp"
-            android:background="@drawable/circle_textview"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -415,14 +315,16 @@
 
     <TextView
 
-        android:textColor="@color/text_main_password"
-        android:textSize="@dimen/_13sdp"
-        android:gravity="center"
         android:id="@+id/txt_create_your_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/protect_your_privacy_and_secrets"
+        android:textColor="@color/text_main_password"
+        android:textSize="@dimen/_13sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+
 </android.support.constraint.ConstraintLayout>

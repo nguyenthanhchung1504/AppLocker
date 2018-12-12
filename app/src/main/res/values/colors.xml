@@ -5,6 +5,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="text_main_password">#C4CEE6</color>
     <color name="text_splash_screen">#1361CB</color>
-    <color name="color_list_app">#D9DFEB</color>
+    <color name="color_list_app">#DBDFE8</color>
     <color name="text_app">#2C2C2B</color>
+    <color name="color_focus_theme">#FEAF4C</color>
+    <color name="tran">#00FFFFFF</color>
 </resources>

@@ -1,8 +1,13 @@
 package com.applocker.applockmanager.activities;
 
+import android.app.AppOpsManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
@@ -10,11 +15,11 @@ import com.applocker.R;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
-import butterknife.OnClick;
 public class ConfirmPasswordActivity extends CreatePinActivity {
     private SharedPreferenceUtils utils;
     private String passwordConfirm;
     private String passwordCreate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +41,7 @@ public class ConfirmPasswordActivity extends CreatePinActivity {
         if (passwordConfirm.equals(passwordCreate)){
             utils.setValue(Constant.PASSWORD_CONFIRM,passwordConfirm);
             utils.setValue(Constant.PREFERENCES_SECOND,true);
-            startActivity(new Intent(this,ListApplicationActivity.class));
+            startActivity(new Intent(this,AppList.class));
             finish();
         }
         else {

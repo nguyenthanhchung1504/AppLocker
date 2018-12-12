@@ -16,17 +16,19 @@ import android.util.Log;
 import com.applocker.R;
 import com.applocker.applockmanager.activities.ListApplicationActivity;
 import com.applocker.applockmanager.activities.RequestPasswordActivity;
+import com.applocker.applockmanager.utils.Constant;
+import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 
-
 public class LockAppService extends Service {
     public static final String CHANNEL_ID = "channel_id";
     public static final int NOTIFI_ID = 25;
-
+    String currentApp;
+    boolean serviceStatus;
     public LockAppService() {
     }
 
@@ -43,6 +45,8 @@ public class LockAppService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        SharedPreferenceUtils utils = new SharedPreferenceUtils(this);
+        serviceStatus = utils.getBoolanValue(Constant.STATUS,true);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -63,7 +67,7 @@ public class LockAppService extends Service {
         createNotificationChannel();
         initNotification();
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     void initNotification() {
@@ -75,6 +79,7 @@ public class LockAppService extends Service {
 
         startForeground(NOTIFI_ID, mBuilder.build());
     }
+
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -90,6 +95,7 @@ public class LockAppService extends Service {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -98,7 +104,7 @@ public class LockAppService extends Service {
 
     private void retriveNewApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            String currentApp = null;
+            currentApp = null;
             UsageStatsManager usm = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
             long time = System.currentTimeMillis();
             List<UsageStats> applist = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 1000, time);
@@ -115,21 +121,26 @@ public class LockAppService extends Service {
             Log.d("AAA", "Current App in foreground is: " + currentApp);
             if (currentApp != null)
                 checkMyApp(currentApp);
-        }
-        else {
+        } else {
             ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-            String mm=(manager.getRunningTasks(1).get(0)).topActivity.getPackageName();
+            String mm = (manager.getRunningTasks(1).get(0)).topActivity.getPackageName();
+            List<ActivityManager.RunningAppProcessInfo> task = manager.getRunningAppProcesses();
+            currentApp = task.get(0).processName;
             Log.d("AAA", "Current App in foreground is: " + mm);
 
             if (mm != null)
                 checkMyApp(mm);
         }
     }
+
     void checkMyApp(String currentApp) {
         if (ListApplicationActivity.mDBManager.getAppByPackageName(currentApp).getState() == 1) {
-            Intent intent = new Intent(this, RequestPasswordActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            if (serviceStatus == true){
+                Intent intent = new Intent(this, RequestPasswordActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+
         }
     }
 }

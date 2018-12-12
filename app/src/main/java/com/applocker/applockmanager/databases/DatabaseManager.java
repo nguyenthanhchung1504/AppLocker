@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     public static final String DATABASE_NAME = "applock";
     public static final String TABLE_NAME = "lock";
     public static final String ID = "id";
@@ -76,7 +76,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME, new String[]{ID,
                         NAME, PACKAGE_NAME, STATE}, PACKAGE_NAME + "=?",
                 new String[]{packageName}, null, null, null, null);
-        if (cursor != null) {
+        if (cursor.getCount()!=0) {
             cursor.moveToFirst();
 
             App student = new App(null, cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(3));
@@ -149,4 +149,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close();
         return listApp;
     }
+
+
 }
