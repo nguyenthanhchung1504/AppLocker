@@ -65,6 +65,8 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
     ImageView imgThree;
     @BindView(R.id.background_lock)
     ConstraintLayout backgroundLock;
+    @BindView(R.id.progressBar)
+    protected ProgressBar progressBar;
     private String password;
 
     protected SharedPreferenceUtils utils;

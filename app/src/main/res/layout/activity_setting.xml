@@ -98,10 +98,12 @@
                 app:layout_constraintStart_toEndOf="@+id/img_on_off"
                 app:layout_constraintTop_toTopOf="@+id/img_on_off" />
 
-            <Switch
+            <ToggleButton
+                android:background="@drawable/style_switch_setting"
+                android:checked="true"
                 android:id="@+id/sw_on_off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_on_off"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -214,6 +216,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:text="@string/number_of_password_entered"
                 android:textColor="@color/text_app"
@@ -225,7 +228,6 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_7sdp"
                 android:text="@string/sound"
                 android:textColor="@color/text_app"
                 android:textSize="@dimen/_11sdp"
@@ -233,13 +235,16 @@
                 app:layout_constraintStart_toStartOf="@+id/textView5"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-            <Switch
-                android:id="@+id/switch2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_15sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            <ToggleButton
+                android:id="@+id/sw_sound"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@drawable/style_switch_setting"
+                android:checked="true"
+                app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView7" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout

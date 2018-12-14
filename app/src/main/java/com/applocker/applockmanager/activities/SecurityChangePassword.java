@@ -1,39 +1,32 @@
 package com.applocker.applockmanager.activities;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.applocker.R;
-import com.applocker.applockmanager.service.LockAppService;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
-import java.util.concurrent.locks.Lock;
-
-public class RequestPasswordActivity extends CreatePinActivity {
+public class SecurityChangePassword extends CreatePinActivity {
     private String passwordRequest;
     private String passConfirm;
     private String passBackup;
     private Vibrator v;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.protect_your_privacy_and_secrets));
         utils = new SharedPreferenceUtils(this);
-        passConfirm = utils.getStringValue(Constant.PASSWORD_CONFIRM,"");
-        passBackup = utils.getStringValue(Constant.CONFIRM_BACKUP_PASSWORD,"");
+        passConfirm = utils.getStringValue(Constant.PASSWORD_CONFIRM, "");
+        passBackup = utils.getStringValue(Constant.CONFIRM_BACKUP_PASSWORD, "123123123123");
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         txtOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,9 +37,9 @@ public class RequestPasswordActivity extends CreatePinActivity {
 
     }
 
-    private void requestPassword(){
+    private void requestPassword() {
         passwordRequest = edt1.getText().toString() + edt2.getText().toString() + edt3.getText().toString() + edt4.getText().toString() + edt5.getText().toString();
-        if (passwordRequest.isEmpty()){
+        if (passwordRequest.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.app_name));
             builder.setMessage(R.string.blank_password);
@@ -65,15 +58,10 @@ public class RequestPasswordActivity extends CreatePinActivity {
                 //deprecated in API 26
                 v.vibrate(2000);
             }
-        }else {
+        } else {
             if (passwordRequest.equals(passConfirm) || passwordRequest.equals(passBackup)) {
-
-                SharedPreferences.Editor editor = getSharedPreferences("Start", MODE_PRIVATE).edit();
-                editor.putInt("appflag", 1);
-                editor.apply();
+                startActivity(new Intent(SecurityChangePassword.this, ChangePasswordActivity.class));
                 finish();
-
-
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.app_name));
@@ -87,6 +75,7 @@ public class RequestPasswordActivity extends CreatePinActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+                utils.setValue(Constant.SWITCH_ON_OFF, true);
                 edt1.setText(null);
                 edt2.setText(null);
                 edt3.setText(null);
@@ -100,16 +89,5 @@ public class RequestPasswordActivity extends CreatePinActivity {
                 }
             }
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == event.KEYCODE_BACK){
-            Intent startMain = new Intent(Intent.ACTION_MAIN);
-            startMain.addCategory(Intent.CATEGORY_HOME);
-            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(startMain);
-        }
-        return false;
     }
 }

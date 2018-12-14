@@ -39,24 +39,32 @@ public class AppList extends AppCompatActivity {
     private ListView applist;
     private ImageView img_main, img_setting;
     private SharedPreferenceUtils utils;
-
+    private boolean check_on_off;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_list);
         ButterKnife.bind(this);
 
-
+        utils = new SharedPreferenceUtils(this);
         applist = (ListView) findViewById(R.id.applist);
         img_main = findViewById(R.id.img_main);
         img_setting = findViewById(R.id.img_setting);
+
+        check_on_off = utils.getBoolanValue(Constant.SWITCH_ON_OFF,true);
+
+
         if (!isAccessGranted()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
             Toast.makeText(this, "Permission is required", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        if (check_on_off == true){
             Intent intent = new Intent(this, AppLockService.class);
             startService(intent);
+        }
+        else {
+            stopService(new Intent(this,AppLockService.class));
         }
 
 
@@ -79,14 +87,20 @@ public class AppList extends AppCompatActivity {
 
         for (int i = 0; i < packs.size(); i++) {
             ApplicationInfo p = packs.get(i);
-            packagenameArray.add(p.packageName);
-            appnameArray.add(p.loadLabel(getPackageManager()).toString());
-            iconArray.add(p.loadIcon(getPackageManager()));
+            if((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                packagenameArray.add(p.packageName);
+                appnameArray.add(p.loadLabel(getPackageManager()).toString());
+                iconArray.add(p.loadIcon(getPackageManager()));
+            } if((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+                packagenameArray.add(p.packageName);
+                appnameArray.add(p.loadLabel(getPackageManager()).toString());
+                iconArray.add(p.loadIcon(getPackageManager()));
+            }
 
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, appnameArray);
 
-        utils = new SharedPreferenceUtils(this);
+
         int pos = utils.getIntValue(Constant.CHANGE_THEME, 0);
         if (pos == 0) {
             layoutMain.setBackgroundResource(R.drawable.bg_1);
@@ -116,6 +130,29 @@ public class AppList extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (check_on_off == true){
+            Intent intent = new Intent(this, AppLockService.class);
+            startService(intent);
+        }
+        else {
+            stopService(new Intent(this,AppLockService.class));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (check_on_off == true){
+            Intent intent = new Intent(this, AppLockService.class);
+            startService(intent);
+        }
+        else {
+            stopService(new Intent(this,AppLockService.class));
+        }
+    }
 
     private boolean isAccessGranted() {
         try {
@@ -127,7 +164,12 @@ public class AppList extends AppCompatActivity {
                 mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
                         applicationInfo.uid, applicationInfo.packageName);
             }
-            return (mode == AppOpsManager.MODE_ALLOWED);
+            if (mode == AppOpsManager.MODE_DEFAULT) {
+                return this.checkCallingOrSelfPermission(android.Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
+            }
+            else {
+                return mode == AppOpsManager.MODE_ALLOWED;
+            }
 
         } catch (PackageManager.NameNotFoundException e) {
             return false;
@@ -143,12 +185,26 @@ public class AppList extends AppCompatActivity {
             startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(startMain);
         }
-        return true;
+
+        return false;
     }
 
     @OnClick(R.id.img_setting)
     public void onViewClicked() {
         startActivity(new Intent(this, SettingActivity.class));
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finishAffinity();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finishAffinity();
     }
 }
 

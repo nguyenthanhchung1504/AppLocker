@@ -85,4 +85,16 @@ public class ChangeThemeActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finishAffinity();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finishAffinity();
+    }
 }

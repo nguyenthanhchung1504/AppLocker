@@ -33,13 +33,16 @@
         app:layout_constraintStart_toEndOf="@+id/img_app"
         app:layout_constraintTop_toTopOf="@+id/img_app" />
 
-    <Switch
+    <ToggleButton
+
+        android:background="@drawable/style_switch"
         android:id="@+id/sw_on_off"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="@+id/txt_name_app"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_name_app" />
+        app:layout_constraintTop_toTopOf="@+id/txt_name_app"
+        />
 </android.support.constraint.ConstraintLayout>

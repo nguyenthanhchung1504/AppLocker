@@ -15,6 +15,15 @@ public class Constant {
     public static final String BACKUP_PASSWORD = "backup password";
     public static final String CONFIRM_BACKUP_PASSWORD = "confirm backup password";
 
+    public static final String SWITCH_ON_OFF = "switch on off";
+
+    public static final String SWITCH_OFF_ACCESS = "switch off access";
+
+    public static final int  MAGICAL_NUMBER = 150495;
+
+
+
+
 
 
 
