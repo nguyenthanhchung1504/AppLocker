@@ -34,6 +34,11 @@ public class AppLockService extends Service {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
     public IBinder onBind(Intent intent) {
 
         throw new UnsupportedOperationException("Not yet implemented");
@@ -42,7 +47,7 @@ public class AppLockService extends Service {
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         try {
-            final long period = 300;
+            final long period = 3000;
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -69,19 +74,19 @@ public class AppLockService extends Service {
                     if(appflag==1) {
                         Log.d("flag", "1");
 
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//
-//                                try {
-//                                    Thread.sleep(100);
-//                                } catch (InterruptedException ex) {
-//                                    // Handle ...
-//                                }
-//                            }
-//                        }).start();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                        if (getForegroundApp() != "com.example.user.applocker") {
+                                try {
+                                    Thread.sleep(5000);
+                                } catch (InterruptedException ex) {
+                                    // Handle ...
+                                }
+                            }
+                        }).start();
+
+                        if (getForegroundApp() != "com.applocker") {
                             Log.d("myapp", "myapp");
 
                             String innermost = getForegroundApp();
@@ -95,7 +100,7 @@ public class AppLockService extends Service {
                                 Log.d("innermost after", innermost1);
                                 Log.d("appname after", appname);
 
-                                if (getForegroundApp() != "com.example.user.applocker") {
+                                if (getForegroundApp() != "com.applocker") {
                                     Log.d("myapp", "myapp");
 
                                     SharedPreferences.Editor editor = getSharedPreferences("Start", MODE_PRIVATE).edit();
@@ -131,7 +136,8 @@ public class AppLockService extends Service {
                         if(appflag==0&&status==0) {
 
                             Intent i = new Intent(getApplicationContext(), RequestPasswordActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                         }
 
@@ -145,8 +151,8 @@ public class AppLockService extends Service {
         } catch (Exception e) {
             Thread.currentThread().interrupt();
         }
-        return super.onStartCommand(intent, flags, startId);
-        //return START_NOT_STICKY;
+//        return super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
     }
 
 
@@ -180,5 +186,6 @@ public class AppLockService extends Service {
 
         return currentApp;
     }
+
 
 }
