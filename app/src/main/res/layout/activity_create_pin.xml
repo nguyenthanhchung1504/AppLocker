@@ -212,6 +212,8 @@
 
         <EditText
 
+            android:inputType="numberPassword"
+            android:textStyle="bold"
             android:id="@+id/edt1"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
@@ -220,7 +222,6 @@
             android:layout_marginBottom="@dimen/_7sdp"
             android:background="@drawable/circle_textview"
             android:gravity="center"
-            android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -231,6 +232,8 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
+            android:inputType="numberPassword"
+            android:textStyle="bold"
             android:id="@+id/edt2"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
@@ -238,7 +241,6 @@
             android:layout_marginBottom="@dimen/_7sdp"
             android:background="@drawable/circle_textview"
             android:gravity="center"
-            android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -248,6 +250,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:inputType="numberPassword"
+            android:textStyle="bold"
             android:id="@+id/edt3"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
@@ -255,7 +259,6 @@
             android:layout_marginBottom="@dimen/_7sdp"
             android:background="@drawable/circle_textview"
             android:gravity="center"
-            android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -265,6 +268,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:inputType="numberPassword"
+            android:textStyle="bold"
             android:id="@+id/edt4"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
@@ -272,7 +277,6 @@
             android:layout_marginBottom="@dimen/_7sdp"
             android:background="@drawable/circle_textview"
             android:gravity="center"
-            android:inputType="numberPassword"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -282,6 +286,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:inputType="numberPassword"
+            android:textStyle="bold"
             android:id="@+id/edt5"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
@@ -290,7 +296,6 @@
             android:layout_marginBottom="@dimen/_7sdp"
             android:background="@drawable/circle_textview"
             android:gravity="center"
-            android:inputType="numberPassword"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"

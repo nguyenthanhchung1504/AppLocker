@@ -104,6 +104,7 @@ public class Database extends SQLiteOpenHelper
             }
             if(cursor != null)
                 cursor.close();
+            db.close();
             return list;
         }
     }

@@ -1,19 +1,28 @@
 package com.applocker.applockmanager.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.service.AppLockService;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EnterPasswordActivity extends CreatePinActivity {
     private String passwordRequest;
@@ -21,13 +30,18 @@ public class EnterPasswordActivity extends CreatePinActivity {
     private String passBackup;
     private Vibrator v;
     private boolean check_on_off;
+    private int num;
+    private int number_entered;
+    private ProgressDialog progressDialog;
+    private MediaPlayer mediaPlayer;
+    private boolean sound;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.protect_your_privacy_and_secrets));
         utils = new SharedPreferenceUtils(this);
-        passConfirm = utils.getStringValue(Constant.PASSWORD_CONFIRM,"");
-        passBackup = utils.getStringValue(Constant.CONFIRM_BACKUP_PASSWORD,"");
+        passConfirm = utils.getStringValue(Constant.PASSWORD_CONFIRM, "");
+        passBackup = utils.getStringValue(Constant.CONFIRM_BACKUP_PASSWORD, "");
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         txtOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,20 +49,34 @@ public class EnterPasswordActivity extends CreatePinActivity {
                 requestPassword();
             }
         });
-        check_on_off = utils.getBoolanValue(Constant.SWITCH_ON_OFF,true);
-        if (check_on_off == true){
-            Intent intent = new Intent(this, AppLockService.class);
-            startService(intent);
-        }
-        else {
-            stopService(new Intent(this,AppLockService.class));
-        }
-
+        check_on_off = utils.getBoolanValue(Constant.SWITCH_ON_OFF, true);
+        num = utils.getIntValue(Constant.NUMBER_ENTERED, 3);
+        mediaPlayer = new MediaPlayer();
+        sound = utils.getBoolanValue(Constant.SWITCH_SOUND,true);
     }
 
-    private void requestPassword(){
+    private void errorNumber() {
+        int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
+        if (error_number==num){
+            if (sound == true){
+                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer.start();
+            }
+            else {
+                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer.stop();
+            }
+
+        }else if (error_number>num){
+            System.exit(0);
+        }
+    }
+
+
+
+    private void requestPassword() {
         passwordRequest = edt1.getText().toString() + edt2.getText().toString() + edt3.getText().toString() + edt4.getText().toString() + edt5.getText().toString();
-        if (passwordRequest.isEmpty()){
+        if (passwordRequest.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.app_name));
             builder.setMessage(R.string.blank_password);
@@ -67,17 +95,38 @@ public class EnterPasswordActivity extends CreatePinActivity {
                 //deprecated in API 26
                 v.vibrate(2000);
             }
-        }
-        else {
+        } else {
             if (passwordRequest.equals(passConfirm) || passwordRequest.equals(passBackup)) {
-                progressBar.setVisibility(View.VISIBLE);
-                startActivity(new Intent(this, AppList.class));
-                finish();
+                if (mediaPlayer!=null){
+                    mediaPlayer.stop();
+                }
+                final ProgressDialog progress = new ProgressDialog(this);
+                progress.setMessage(getString(R.string.loading_data));
+                progress.show();
+                utils.setValue(Constant.SAVE_ERROR_NUMBER,0);
+                Runnable progressRunnable = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(EnterPasswordActivity.this, AppList.class));
+                        finish();
+                        progress.cancel();
+                    }
+                };
+
+                Handler pdCanceller = new Handler();
+                pdCanceller.postDelayed(progressRunnable, 3000);
+
 
             } else {
+                number_entered = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
+                number_entered = number_entered +1;
+                utils.setValue(Constant.SAVE_ERROR_NUMBER,number_entered);
+
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.app_name));
-                builder.setMessage(R.string.wrong_password);
+                builder.setMessage(new StringBuilder(getString(R.string.wrong_password)).append(" ").append(number_entered).append("/").append(num));
                 builder.setCancelable(false);
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
@@ -87,11 +136,17 @@ public class EnterPasswordActivity extends CreatePinActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+                errorNumber();
                 edt1.setText(null);
                 edt2.setText(null);
                 edt3.setText(null);
                 edt4.setText(null);
                 edt5.setText(null);
+                edt1.setBackgroundResource(R.drawable.circle_textview);
+                edt2.setBackgroundResource(R.drawable.circle_textview);
+                edt3.setBackgroundResource(R.drawable.circle_textview);
+                edt4.setBackgroundResource(R.drawable.circle_textview);
+                edt5.setBackgroundResource(R.drawable.circle_textview);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
@@ -100,5 +155,16 @@ public class EnterPasswordActivity extends CreatePinActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_BACK){
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
+        }
+        return false;
     }
 }

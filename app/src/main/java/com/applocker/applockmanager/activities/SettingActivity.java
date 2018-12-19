@@ -1,19 +1,24 @@
 package com.applocker.applockmanager.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.service.AppLockService;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +36,8 @@ public class SettingActivity extends AppCompatActivity {
     ToggleButton swOnOff;
     @BindView(R.id.sw_sound)
     ToggleButton swSound;
+    @BindView(R.id.btn_number)
+    ElegantNumberButton btnNumber;
     private SharedPreferenceUtils utils;
     private boolean checkOnOf;
 
@@ -68,15 +75,34 @@ public class SettingActivity extends AppCompatActivity {
         checkOnOf = utils.getBoolanValue(Constant.SWITCH_ON_OFF, true);
         swOnOff.setChecked(checkOnOf);
 
+        int save_num = utils.getIntValue(Constant.NUMBER_ENTERED,3);
+        btnNumber.setNumber(String.valueOf(save_num));
 
         if (checkOnOf == true) {
             swOnOff.setBackgroundResource(R.drawable.ic_on);
-            Intent intent = new Intent(SettingActivity.this, AppLockService.class);
-            startService(intent);
+            Intent intent = new Intent(this, AppLockService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent);
+            } else {
+                startService(intent);
+            }
         } else {
             swOnOff.setBackgroundResource(R.drawable.ic_off);
-            stopService(new Intent(this, AppLockService.class));
+            Intent intent = new Intent(this, AppLockService.class);
+            stopService(intent);
         }
+
+
+
+        boolean checkSound;
+        checkSound = utils.getBoolanValue(Constant.SWITCH_SOUND,true);
+        if (checkSound == true){
+            swOnOff.setBackgroundResource(R.drawable.ic_on);
+        }
+        else {
+            swOnOff.setBackgroundResource(R.drawable.ic_off);
+        }
+
 
 
         swOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -86,7 +112,7 @@ public class SettingActivity extends AppCompatActivity {
                     swOnOff.setChecked(true);
                     swOnOff.setBackgroundResource(R.drawable.ic_on);
                     utils.setValue(Constant.SWITCH_ON_OFF, true);
-                    startActivity(new Intent(SettingActivity.this,SecurityOnLockApp.class));
+                    startActivity(new Intent(SettingActivity.this, SecurityOnLockApp.class));
                     finish();
                 } else {
                     boolean switch_off_access = utils.getBoolanValue(Constant.SWITCH_ON_OFF, true);
@@ -102,15 +128,26 @@ public class SettingActivity extends AppCompatActivity {
         swSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     swSound.setBackgroundResource(R.drawable.ic_on);
-                }
-                else {
+                    swSound.setChecked(true);
+                    utils.setValue(Constant.SWITCH_SOUND,true);
+                } else {
                     swSound.setBackgroundResource(R.drawable.ic_off);
+                    swSound.setChecked(false);
+                    utils.setValue(Constant.SWITCH_SOUND,false);
                 }
             }
         });
 
+        btnNumber.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int num = Integer.parseInt(btnNumber.getNumber());
+                utils.setValue(Constant.NUMBER_ENTERED,num);
+
+            }
+        });
     }
 
     @OnClick({R.id.layout_change_password, R.id.layout_change_theme, R.id.layout_backup_password})
@@ -133,15 +170,43 @@ public class SettingActivity extends AppCompatActivity {
 
     @OnClick(R.id.img_back)
     public void onViewClicked() {
-        startActivity(new Intent(this, AppList.class));
-        finish();
+        final ProgressDialog progress = new ProgressDialog(this);
+        progress.setMessage(getString(R.string.loading_data));
+        progress.show();
+
+        Runnable progressRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                startActivity(new Intent(SettingActivity.this, AppList.class));
+                finish();
+                progress.cancel();
+            }
+        };
+
+        Handler pdCanceller = new Handler();
+        pdCanceller.postDelayed(progressRunnable, 3000);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == event.KEYCODE_BACK) {
-            startActivity(new Intent(this, AppList.class));
-            finish();
+            final ProgressDialog progress = new ProgressDialog(this);
+            progress.setMessage(getString(R.string.loading_data));
+            progress.show();
+
+            Runnable progressRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    startActivity(new Intent(SettingActivity.this, AppList.class));
+                    finish();
+                    progress.cancel();
+                }
+            };
+
+            Handler pdCanceller = new Handler();
+            pdCanceller.postDelayed(progressRunnable, 3000);
         }
         if (keyCode == event.KEYCODE_HOME) {
             stopService(new Intent(this, AppLockService.class));

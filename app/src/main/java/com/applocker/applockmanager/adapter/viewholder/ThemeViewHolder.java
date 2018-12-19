@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.onclickinterface.ItemClickListener;
 
 public class ThemeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

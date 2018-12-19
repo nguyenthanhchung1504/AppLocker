@@ -43,7 +43,7 @@
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="@dimen/_20sdp"
+            android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_10sdp"
@@ -224,10 +224,24 @@
                 app:layout_constraintStart_toStartOf="@+id/txt_intrusion_alert"
                 app:layout_constraintTop_toBottomOf="@+id/txt_intrusion_alert" />
 
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:id="@+id/btn_number"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_29sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:backGroundColor="@color/color_number_count"
+                app:layout_constraintBottom_toTopOf="@+id/sw_sound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_6sdp"
                 android:text="@string/sound"
                 android:textColor="@color/text_app"
                 android:textSize="@dimen/_11sdp"
@@ -251,7 +265,6 @@
             android:id="@+id/layout_backup_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_7sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

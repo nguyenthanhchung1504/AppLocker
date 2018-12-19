@@ -1,8 +1,10 @@
 package com.applocker.applockmanager.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -11,7 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
@@ -19,6 +21,10 @@ public class ConfirmBackupPassword extends CreatePinActivity {
     private String confirmBackupPassword;
     private String backupPassword;
     private Vibrator v;
+    private int num;
+    private int number_entered;
+    private ProgressDialog progressDialog;
+    private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +38,19 @@ public class ConfirmBackupPassword extends CreatePinActivity {
                 requestPassword();
             }
         });
-
+        num = utils.getIntValue(Constant.NUMBER_ENTERED, 3);
+        mediaPlayer = new MediaPlayer();
 
     }
-
+    private void errorNumber() {
+        int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
+        if (error_number==num){
+            mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+            mediaPlayer.start();
+        }else if (error_number>num){
+            System.exit(0);
+        }
+    }
     private void requestPassword(){
         confirmBackupPassword = edt1.getText().toString() + edt2.getText().toString() + edt3.getText().toString() + edt4.getText().toString() + edt5.getText().toString();
         if (confirmBackupPassword.isEmpty()){
@@ -70,6 +85,11 @@ public class ConfirmBackupPassword extends CreatePinActivity {
                 edt3.setText(null);
                 edt4.setText(null);
                 edt5.setText(null);
+                edt1.setBackgroundResource(R.drawable.circle_textview);
+                edt2.setBackgroundResource(R.drawable.circle_textview);
+                edt3.setBackgroundResource(R.drawable.circle_textview);
+                edt4.setBackgroundResource(R.drawable.circle_textview);
+                edt5.setBackgroundResource(R.drawable.circle_textview);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {

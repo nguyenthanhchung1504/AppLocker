@@ -1,25 +1,16 @@
 package com.applocker.applockmanager;
 
-import android.app.AppOpsManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 
-import com.applocker.R;
-import com.applocker.applockmanager.activities.AppList;
 import com.applocker.applockmanager.activities.CreatePinActivity;
 import com.applocker.applockmanager.activities.EnterPasswordActivity;
-import com.applocker.applockmanager.activities.ListApplicationActivity;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
-public class SlashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +25,7 @@ public class SlashScreenActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     /* Create an Intent that will start the Menu-Activity. */
-                    Intent mainIntent = new Intent(SlashScreenActivity.this,EnterPasswordActivity.class);
+                    Intent mainIntent = new Intent(SplashScreenActivity.this,EnterPasswordActivity.class);
                     startActivity(mainIntent);
                     finish();
                 }
@@ -46,7 +37,7 @@ public class SlashScreenActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     /* Create an Intent that will start the Menu-Activity. */
-                    Intent mainIntent = new Intent(SlashScreenActivity.this,CreatePinActivity.class);
+                    Intent mainIntent = new Intent(SplashScreenActivity.this,CreatePinActivity.class);
                     startActivity(mainIntent);
                     finish();
                 }

@@ -14,12 +14,12 @@ public class Constant {
 
     public static final String BACKUP_PASSWORD = "backup password";
     public static final String CONFIRM_BACKUP_PASSWORD = "confirm backup password";
-
     public static final String SWITCH_ON_OFF = "switch on off";
-
-    public static final String SWITCH_OFF_ACCESS = "switch off access";
-
+    public static final String SWITCH_SOUND = "switch sound";
     public static final int  MAGICAL_NUMBER = 150495;
+
+    public static final String NUMBER_ENTERED = "number entered";
+    public static final String SAVE_ERROR_NUMBER = "save error number";
 
 
 
@@ -34,6 +34,9 @@ public class Constant {
     public static final int DATABASE_VERSION = 2;
     public static final String APP_NAME = "Name";
     public static final String SR_NO = "Sno";
+
+    public static final String STARTFOREGROUND_ACTION = "STARTFOREGROUND_ACTION";
+    public static final String STOPFOREGROUND_ACTION = "STOPFOREGROUND_ACTION";
 
 
 }

@@ -16,7 +16,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.applocker.R;
+
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 import com.bumptech.glide.Glide;
@@ -160,36 +161,46 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
     private void setPassword(int number) {
         if (TextUtils.isEmpty(edt1.getText().toString())) {
             edt1.setText(number + "");
+            edt1.setBackgroundResource(R.drawable.effect_password);
             edt2.requestFocus();
         } else if (TextUtils.isEmpty(edt2.getText().toString())) {
             edt2.setText(number + "");
+            edt2.setBackgroundResource(R.drawable.effect_password);
             edt3.requestFocus();
         } else if (TextUtils.isEmpty(edt3.getText().toString())) {
             edt3.setText(number + "");
+            edt3.setBackgroundResource(R.drawable.effect_password);
             edt4.requestFocus();
         } else if (TextUtils.isEmpty(edt4.getText().toString())) {
             edt4.setText(number + "");
+            edt4.setBackgroundResource(R.drawable.effect_password);
             edt5.requestFocus();
         } else if (TextUtils.isEmpty(edt5.getText().toString())) {
             edt5.setText(number + "");
+            edt5.setBackgroundResource(R.drawable.effect_password);
         }
     }
 
     private void deletePassword() {
         if (!TextUtils.isEmpty(edt5.getText().toString())) {
             edt5.setText("");
+            edt5.setBackgroundResource(R.drawable.circle_textview);
             edt4.requestFocus();
         } else if (!TextUtils.isEmpty(edt4.getText().toString())) {
             edt4.setText("");
+            edt4.setBackgroundResource(R.drawable.circle_textview);
             edt3.requestFocus();
         } else if (!TextUtils.isEmpty(edt3.getText().toString())) {
             edt3.setText("");
+            edt3.setBackgroundResource(R.drawable.circle_textview);
             edt2.requestFocus();
         } else if (!TextUtils.isEmpty(edt2.getText().toString())) {
             edt2.setText("");
+            edt2.setBackgroundResource(R.drawable.circle_textview);
             edt1.requestFocus();
         } else if (!TextUtils.isEmpty(edt1.getText().toString())) {
             edt1.requestFocus();
+            edt1.setBackgroundResource(R.drawable.circle_textview);
             edt1.setText("");
         }
     }
@@ -241,7 +252,7 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
             builder.setTitle(getString(R.string.app_name));
             builder.setMessage(R.string.please_enter_your_password);
             builder.setCancelable(false);
-            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

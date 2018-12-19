@@ -8,7 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 
-import com.applocker.R;
+
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.ThemeAdapter;
 import com.applocker.applockmanager.models.Theme;
 import com.applocker.applockmanager.utils.Constant;

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.onclickinterface.ItemClickListener;
 import com.applocker.applockmanager.adapter.viewholder.ThemeViewHolder;
 import com.applocker.applockmanager.models.Theme;

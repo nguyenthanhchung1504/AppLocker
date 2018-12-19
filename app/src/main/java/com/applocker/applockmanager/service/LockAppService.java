@@ -13,7 +13,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.activities.ListApplicationActivity;
 import com.applocker.applockmanager.activities.RequestPasswordActivity;
 import com.applocker.applockmanager.utils.Constant;

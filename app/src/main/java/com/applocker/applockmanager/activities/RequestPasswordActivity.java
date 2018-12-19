@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -15,7 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.service.LockAppService;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
@@ -27,6 +28,10 @@ public class RequestPasswordActivity extends CreatePinActivity {
     private String passConfirm;
     private String passBackup;
     private Vibrator v;
+    private int num;
+    private int number_entered;
+    private MediaPlayer mediaPlayer;
+    private boolean sound;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +46,25 @@ public class RequestPasswordActivity extends CreatePinActivity {
                 requestPassword();
             }
         });
+        num = utils.getIntValue(Constant.NUMBER_ENTERED, 3);
+        mediaPlayer = new MediaPlayer();
+        sound = utils.getBoolanValue(Constant.SWITCH_SOUND,true);
+    }
 
+    private void errorNumber() {
+        int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
+        if (error_number==num){
+            if (sound == true){
+                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer.start();
+            }
+            else {
+                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer.stop();
+            }
+        }else if (error_number>num){
+            System.exit(0);
+        }
     }
 
     private void requestPassword(){
@@ -67,7 +90,7 @@ public class RequestPasswordActivity extends CreatePinActivity {
             }
         }else {
             if (passwordRequest.equals(passConfirm) || passwordRequest.equals(passBackup)) {
-
+                utils.setValue(Constant.SAVE_ERROR_NUMBER,0);
                 SharedPreferences.Editor editor = getSharedPreferences("Start", MODE_PRIVATE).edit();
                 editor.putInt("appflag", 1);
                 editor.apply();
@@ -75,9 +98,12 @@ public class RequestPasswordActivity extends CreatePinActivity {
 
 
             } else {
+                number_entered = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,1);
+                number_entered = number_entered +1;
+                utils.setValue(Constant.SAVE_ERROR_NUMBER,number_entered);
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.app_name));
-                builder.setMessage(R.string.wrong_password);
+                builder.setMessage(new StringBuilder(getString(R.string.wrong_password)).append(" ").append(number_entered).append("/").append(num));
                 builder.setCancelable(false);
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
@@ -87,11 +113,18 @@ public class RequestPasswordActivity extends CreatePinActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
+                errorNumber();
                 edt1.setText(null);
                 edt2.setText(null);
                 edt3.setText(null);
                 edt4.setText(null);
                 edt5.setText(null);
+                edt1.setBackgroundResource(R.drawable.circle_textview);
+                edt2.setBackgroundResource(R.drawable.circle_textview);
+                edt3.setBackgroundResource(R.drawable.circle_textview);
+                edt4.setBackgroundResource(R.drawable.circle_textview);
+                edt5.setBackgroundResource(R.drawable.circle_textview);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {

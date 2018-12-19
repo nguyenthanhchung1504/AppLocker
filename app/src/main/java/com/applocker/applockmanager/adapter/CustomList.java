@@ -17,7 +17,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.activities.AppList;
 import com.applocker.applockmanager.activities.SecurityAppActivity;
 import com.applocker.applockmanager.databases.Database;
@@ -42,7 +42,7 @@ public class CustomList extends BaseAdapter {
     Database database;
     //Switch [] result3;
     private static LayoutInflater inflater=null;
-    public CustomList(AppList appList, String[] Appname, Drawable[] Appicon, ArrayList<String> AppPackagename) {
+    public CustomList(Context appList, String[] Appname, Drawable[] Appicon, ArrayList<String> AppPackagename) {
         // TODO Auto-generated constructor stub
         result1=Appname;
         result2=Appicon;
@@ -90,6 +90,9 @@ public class CustomList extends BaseAdapter {
         holder.appswitch.setTextOn(null);
         holder.appswitch.setTextOff(null);
         holder.appname.setText(result1[position]);
+        if (holder.appname.getText().toString().equals("App Locker")){
+            holder.appswitch.setEnabled(false);
+        }
 //        holder.appicon.setImageDrawable(result2[position]);
 
 
@@ -108,6 +111,7 @@ public class CustomList extends BaseAdapter {
                   if(holder.appswitch.isChecked())
                   {
                       //result3.add(position);
+
                       been.setAppName(result4.get(position));
 
                       if (database.AppInsert(been))

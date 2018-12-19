@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_main"
-    android:background="@drawable/bg_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".applockmanager.activities.AppList"
-    android:orientation="vertical">
+    android:background="@drawable/bg_1"
+    android:orientation="vertical"
+    tools:context=".applockmanager.activities.AppList">
 
 
     <com.applocker.applockmanager.resizeimage.DynamicImageView
@@ -44,12 +44,13 @@
         app:layout_constraintTop_toTopOf="@+id/img_main" />
 
     <android.support.constraint.ConstraintLayout
-        android:background="@drawable/style_list_app"
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/style_list_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

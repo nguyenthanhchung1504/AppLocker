@@ -9,4 +9,5 @@
     <color name="text_app">#2C2C2B</color>
     <color name="color_focus_theme">#FEAF4C</color>
     <color name="tran">#00FFFFFF</color>
+    <color name="color_number_count">#437AB0</color>
 </resources>

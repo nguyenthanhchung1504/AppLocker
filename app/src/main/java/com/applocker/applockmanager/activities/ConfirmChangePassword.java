@@ -11,7 +11,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
-import com.applocker.R;
+
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
@@ -69,6 +70,11 @@ public class ConfirmChangePassword extends CreatePinActivity {
                 edt3.setText(null);
                 edt4.setText(null);
                 edt5.setText(null);
+                edt1.setBackgroundResource(R.drawable.circle_textview);
+                edt2.setBackgroundResource(R.drawable.circle_textview);
+                edt3.setBackgroundResource(R.drawable.circle_textview);
+                edt4.setBackgroundResource(R.drawable.circle_textview);
+                edt5.setBackgroundResource(R.drawable.circle_textview);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {

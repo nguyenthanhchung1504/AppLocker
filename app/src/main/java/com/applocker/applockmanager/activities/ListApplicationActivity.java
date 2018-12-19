@@ -20,7 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.ListAppAdapter;
 import com.applocker.applockmanager.databases.DatabaseManager;
 import com.applocker.applockmanager.models.App;

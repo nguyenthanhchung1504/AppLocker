@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.activities.ListApplicationActivity;
 import com.applocker.applockmanager.models.App;
 

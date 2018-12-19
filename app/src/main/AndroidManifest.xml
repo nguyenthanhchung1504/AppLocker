@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.applocker">
+    package="com.applocker.applockmanager">
+
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"
-        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission
-        android:name="android.permission.PACKAGE_USAGE_STATS"
+        android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
@@ -27,14 +24,15 @@
         android:roundIcon="@mipmap/ic_launcher_applock"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:icon">
         <activity
-            android:noHistory="true"
+            android:name=".SplashScreenActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:name=".applockmanager.SlashScreenActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait">
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,120 +40,118 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.CreatePinActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:name=".applockmanager.activities.CreatePinActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.ConfirmPasswordActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".applockmanager.activities.ListApplicationActivity" />
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
-            android:name=".applockmanager.activities.RequestPasswordActivity"
-            android:parentActivityName=".applockmanager.activities.ListApplicationActivity"
-            android:theme="@style/RequestPasswordNoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".applockmanager.activities.ListApplicationActivity" />
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.ConfirmPasswordActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.ListApplicationActivity" />
+        <activity
+            android:name=".activities.RequestPasswordActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
-            android:noHistory="true"
+            android:launchMode="singleTop"
+            android:name=".activities.AppList"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:name=".applockmanager.activities.AppList"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".activities.SettingActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.EnterPasswordActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.ChangePasswordActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.ConfirmChangePassword"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.ChangeThemeActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.CreateBackupPassword"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.ConfirmBackupPassword"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.SecurityBackupPassword"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.SecurityAppActivity"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.SecurityChangePassword"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.SecurityOnLockApp"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <service
-            android:name=".applockmanager.service.AppLockService"
+            android:name=".service.AppLockService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.SettingActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.EnterPasswordActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.ChangePasswordActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.ConfirmChangePassword"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.ChangeThemeActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.CreateBackupPassword"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.ConfirmBackupPassword"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:name=".applockmanager.activities.SecurityBackupPassword"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:noHistory="true"
-            android:name=".applockmanager.activities.SecurityAppActivity"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".applockmanager.activities.SecurityChangePassword"
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".applockmanager.activities.SecurityOnLockApp"
-            android:noHistory="true"
-            android:hardwareAccelerated="false"
-            android:largeHeap="true"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

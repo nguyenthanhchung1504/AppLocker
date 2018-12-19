@@ -1,24 +1,29 @@
 package com.applocker.applockmanager.activities;
 
+import android.Manifest;
 import android.app.AppOpsManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.applocker.R;
+import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.CustomList;
 import com.applocker.applockmanager.service.AppLockService;
 import com.applocker.applockmanager.utils.Constant;
@@ -40,6 +45,12 @@ public class AppList extends AppCompatActivity {
     private ImageView img_main, img_setting;
     private SharedPreferenceUtils utils;
     private boolean check_on_off;
+    private ProgressDialog dialog;
+    ArrayList<String> packagenameArray;
+    ArrayList<String> appnameArray;
+    ArrayList<Drawable> iconArray;
+    ArrayAdapter<String> arrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +62,7 @@ public class AppList extends AppCompatActivity {
         img_main = findViewById(R.id.img_main);
         img_setting = findViewById(R.id.img_setting);
 
-        check_on_off = utils.getBoolanValue(Constant.SWITCH_ON_OFF,true);
+        check_on_off = utils.getBoolanValue(Constant.SWITCH_ON_OFF, true);
 
 
         if (!isAccessGranted()) {
@@ -59,12 +70,16 @@ public class AppList extends AppCompatActivity {
             startActivity(intent);
             Toast.makeText(this, "Permission is required", Toast.LENGTH_SHORT).show();
         }
-        if (check_on_off == true){
+        if (check_on_off == true) {
             Intent intent = new Intent(this, AppLockService.class);
-            startService(intent);
-        }
-        else {
-            stopService(new Intent(this,AppLockService.class));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent);
+            } else {
+                startService(intent);
+            }
+        } else {
+            Intent intent = new Intent(this, AppLockService.class);
+            stopService(intent);
         }
 
 
@@ -72,10 +87,9 @@ public class AppList extends AppCompatActivity {
         editor.putInt("flag", 1);
         editor.apply();
 
-
-        ArrayList<String> packagenameArray = new ArrayList<String>();
-        ArrayList<String> appnameArray = new ArrayList<String>();
-        ArrayList<Drawable> iconArray = new ArrayList<Drawable>();
+        packagenameArray = new ArrayList<String>();
+        appnameArray = new ArrayList<String>();
+        iconArray = new ArrayList<Drawable>();
 
         PackageManager packageManager = getPackageManager();
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -87,14 +101,19 @@ public class AppList extends AppCompatActivity {
 
         for (int i = 0; i < packs.size(); i++) {
             ApplicationInfo p = packs.get(i);
-            if((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+            if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 packagenameArray.add(p.packageName);
                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
                 iconArray.add(p.loadIcon(getPackageManager()));
-            } if((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+            }
+            if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
                 packagenameArray.add(p.packageName);
                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
                 iconArray.add(p.loadIcon(getPackageManager()));
+            } else {
+//                 packagenameArray.add(p.packageName);
+//                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
+//                 iconArray.add(p.loadIcon(getPackageManager()));
             }
 
         }
@@ -127,32 +146,8 @@ public class AppList extends AppCompatActivity {
         Glide.with(this).load(R.drawable.ic_main).into(img_main);
         Glide.with(this).load(R.drawable.ic_setting).into(img_setting);
 
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (check_on_off == true){
-            Intent intent = new Intent(this, AppLockService.class);
-            startService(intent);
-        }
-        else {
-            stopService(new Intent(this,AppLockService.class));
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (check_on_off == true){
-            Intent intent = new Intent(this, AppLockService.class);
-            startService(intent);
-        }
-        else {
-            stopService(new Intent(this,AppLockService.class));
-        }
-    }
 
     private boolean isAccessGranted() {
         try {
@@ -165,9 +160,8 @@ public class AppList extends AppCompatActivity {
                         applicationInfo.uid, applicationInfo.packageName);
             }
             if (mode == AppOpsManager.MODE_DEFAULT) {
-                return this.checkCallingOrSelfPermission(android.Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
-            }
-            else {
+                return this.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
+            } else {
                 return mode == AppOpsManager.MODE_ALLOWED;
             }
 
@@ -180,10 +174,14 @@ public class AppList extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == event.KEYCODE_BACK) {
+
             Intent startMain = new Intent(Intent.ACTION_MAIN);
             startMain.addCategory(Intent.CATEGORY_HOME);
             startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(startMain);
+
+
         }
 
         return false;
@@ -206,5 +204,6 @@ public class AppList extends AppCompatActivity {
         super.onStop();
         finishAffinity();
     }
+
 }
 
