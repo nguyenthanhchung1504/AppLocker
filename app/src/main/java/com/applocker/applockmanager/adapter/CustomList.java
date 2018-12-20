@@ -1,10 +1,7 @@
 package com.applocker.applockmanager.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -14,16 +11,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.applocker.applockmanager.R;
-import com.applocker.applockmanager.activities.AppList;
-import com.applocker.applockmanager.activities.SecurityAppActivity;
 import com.applocker.applockmanager.databases.Database;
 import com.applocker.applockmanager.models.Been;
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +92,7 @@ public class CustomList extends BaseAdapter {
         holder.appicon.setImageDrawable(resize(result2[position]));
 //        Glide.with(context).load(result2[position]).into(holder.appicon);
         holder.appicon.setDrawingCacheEnabled(true);
-
+//        holder.appswitch.setVisibility(View.GONE);
 
 
 

@@ -14,13 +14,11 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.activities.RequestPasswordActivity;
 import com.applocker.applockmanager.databases.Database;
 import com.applocker.applockmanager.models.Been;
-import com.applocker.applockmanager.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +132,10 @@ public class AppLockService extends Service {
 
         initNotification();
         createNotificationChannel();
+
         return super.onStartCommand(intent, flags, startId);
+//        return START_NOT_STICKY;
+
     }
 
 
@@ -193,5 +194,6 @@ public class AppLockService extends Service {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
 
 }

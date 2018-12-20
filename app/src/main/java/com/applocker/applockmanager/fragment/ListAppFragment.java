@@ -57,38 +57,38 @@ public class ListAppFragment extends Fragment {
         appnameArray = new ArrayList<String>();
         iconArray = new ArrayList<Drawable>();
 
-        PackageManager packageManager = getContext().getPackageManager();
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-
-        Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
-
-        for (int i = 0; i < packs.size(); i++) {
-            ApplicationInfo p = packs.get(i);
-            if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                packagenameArray.add(p.packageName);
-                appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-                iconArray.add(p.loadIcon(getContext().getPackageManager()));
-            }
-            if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-                packagenameArray.add(p.packageName);
-                appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-                iconArray.add(p.loadIcon(getContext().getPackageManager()));
-            } else {
-//                 packagenameArray.add(p.packageName);
-//                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
-//                 iconArray.add(p.loadIcon(getPackageManager()));
-            }
-
-        }
-        String[] Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
-        String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
-        Drawable[] Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
-        adapter = new CustomList(getContext(), Stringarray, Drawablearray, packagenameArray);
-        applist.setAdapter(adapter);
-
+//        PackageManager packageManager = getContext().getPackageManager();
+//        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+//        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//
+//        List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+//
+//        Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
+//
+//        for (int i = 0; i < packs.size(); i++) {
+//            ApplicationInfo p = packs.get(i);
+//            if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+//                packagenameArray.add(p.packageName);
+//                appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
+//                iconArray.add(p.loadIcon(getContext().getPackageManager()));
+//            }
+//            if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+//                packagenameArray.add(p.packageName);
+//                appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
+//                iconArray.add(p.loadIcon(getContext().getPackageManager()));
+//            } else {
+////                 packagenameArray.add(p.packageName);
+////                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
+////                 iconArray.add(p.loadIcon(getPackageManager()));
+//            }
+//
+//        }
+//        String[] Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
+//        String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
+//        Drawable[] Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
+//        adapter = new CustomList(getContext(), Stringarray, Drawablearray, packagenameArray);
+//        applist.setAdapter(adapter);
+        new MyAsyncTask().execute();
         return view;
     }
     public class MyAsyncTask extends AsyncTask<Void,Void,Void>{
@@ -129,6 +129,17 @@ public class ListAppFragment extends Fragment {
 
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            String[] Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
+            String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
+            Drawable[] Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
+            adapter = new CustomList(getContext(), Stringarray, Drawablearray, packagenameArray);
+            applist.setAdapter(adapter);
+            dialog.dismiss();
         }
     }
     @Override
