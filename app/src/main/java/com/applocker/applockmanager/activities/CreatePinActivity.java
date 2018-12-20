@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
@@ -68,6 +67,8 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
     ConstraintLayout backgroundLock;
     @BindView(R.id.progressBar)
     protected ProgressBar progressBar;
+    @BindView(R.id.txt_two)
+    TextView txtTwo;
     private String password;
 
     protected SharedPreferenceUtils utils;
@@ -112,6 +113,9 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
         }
 
         txtCreateYourPassword.setText(getString(R.string.create_your_password));
+        txtCreateYourPassword.setVisibility(View.INVISIBLE);
+        txtTwo.setVisibility(View.VISIBLE);
+        txtTwo.setText(getString(R.string.create_your_password));
 
 
     }
@@ -269,93 +273,96 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
 
     public void themeDefault() {
         backgroundLock.setBackgroundResource(R.drawable.bg_1);
-        Glide.with(this).load(R.drawable.ic_n_delete).into(imgDelete);
-        Glide.with(this).load(R.drawable.ic_n_0).into(imgZero);
-        Glide.with(this).load(R.drawable.ic_n1).into(imgOne);
-        Glide.with(this).load(R.drawable.ic_n2).into(imgTwo);
-        Glide.with(this).load(R.drawable.ic_n3).into(imgThree);
-        Glide.with(this).load(R.drawable.ic_n4).into(imgFour);
-        Glide.with(this).load(R.drawable.ic_n5).into(imgFive);
-        Glide.with(this).load(R.drawable.ic_n6).into(imgSix);
-        Glide.with(this).load(R.drawable.ic_n7).into(imgSeven);
-        Glide.with(this).load(R.drawable.ic_n8).into(imgEight);
-        Glide.with(this).load(R.drawable.ic_n9).into(imgNine);
+        imgDelete.setBackgroundResource(R.drawable.normal_del);
+        imgZero.setBackgroundResource(R.drawable.normal_zero);
+        imgOne.setBackgroundResource(R.drawable.normal_one);
+        imgTwo.setBackgroundResource(R.drawable.normal_two);
+        imgThree.setBackgroundResource(R.drawable.normal_three);
+        imgFour.setBackgroundResource(R.drawable.normal_four);
+        imgFive.setBackgroundResource(R.drawable.normal_five);
+        imgSix.setBackgroundResource(R.drawable.normal_six);
+        imgSeven.setBackgroundResource(R.drawable.normal_seven);
+        imgEight.setBackgroundResource(R.drawable.normal_eight);
+        imgNine.setBackgroundResource(R.drawable.normal_nine);
     }
 
     public void theme2() {
         backgroundLock.setBackgroundResource(R.drawable.bg_2);
-        Glide.with(this).load(R.drawable.ic_2delete).into(imgDelete);
-        Glide.with(this).load(R.drawable.ic_20).into(imgZero);
-        Glide.with(this).load(R.drawable.ic_21).into(imgOne);
-        Glide.with(this).load(R.drawable.ic_22).into(imgTwo);
-        Glide.with(this).load(R.drawable.ic_23).into(imgThree);
-        Glide.with(this).load(R.drawable.ic_24).into(imgFour);
-        Glide.with(this).load(R.drawable.ic_25).into(imgFive);
-        Glide.with(this).load(R.drawable.ic_26).into(imgSix);
-        Glide.with(this).load(R.drawable.ic_27).into(imgSeven);
-        Glide.with(this).load(R.drawable.ic_28).into(imgEight);
-        Glide.with(this).load(R.drawable.ic_29).into(imgNine);
+        imgDelete.setBackgroundResource(R.drawable.ring_delete);
+        imgZero.setBackgroundResource(R.drawable.ring_zero);
+        imgOne.setBackgroundResource(R.drawable.ring_one);
+        imgTwo.setBackgroundResource(R.drawable.ring_two);
+        imgThree.setBackgroundResource(R.drawable.ring_three);
+        imgFour.setBackgroundResource(R.drawable.ring_four);
+        imgFive.setBackgroundResource(R.drawable.ring_five);
+        imgSix.setBackgroundResource(R.drawable.ring_six);
+        imgSeven.setBackgroundResource(R.drawable.ring_seven);
+        imgEight.setBackgroundResource(R.drawable.ring_eight);
+        imgNine.setBackgroundResource(R.drawable.ring_nine);
 
     }
 
     public void theme3() {
         backgroundLock.setBackgroundResource(R.drawable.bg_3);
-        Glide.with(this).load(R.drawable.ic_3delete).into(imgDelete);
-        Glide.with(this).load(R.drawable.ic_30).into(imgZero);
-        Glide.with(this).load(R.drawable.ic_31).into(imgOne);
-        Glide.with(this).load(R.drawable.ic_32).into(imgTwo);
-        Glide.with(this).load(R.drawable.ic_33).into(imgThree);
-        Glide.with(this).load(R.drawable.ic_34).into(imgFour);
-        Glide.with(this).load(R.drawable.ic_35).into(imgFive);
-        Glide.with(this).load(R.drawable.ic_36).into(imgSix);
-        Glide.with(this).load(R.drawable.ic_37).into(imgSeven);
-        Glide.with(this).load(R.drawable.ic_38).into(imgEight);
-        Glide.with(this).load(R.drawable.ic_39).into(imgNine);
+        imgDelete.setBackgroundResource(R.drawable.star_delete);
+        imgZero.setBackgroundResource(R.drawable.star_zero);
+        imgOne.setBackgroundResource(R.drawable.star_one);
+        imgTwo.setBackgroundResource(R.drawable.star_two);
+        imgThree.setBackgroundResource(R.drawable.star_three);
+        imgFour.setBackgroundResource(R.drawable.star_four);
+        imgFive.setBackgroundResource(R.drawable.star_five);
+        imgSix.setBackgroundResource(R.drawable.star_six);
+        imgSeven.setBackgroundResource(R.drawable.star_seven);
+        imgEight.setBackgroundResource(R.drawable.star_eight);
+        imgNine.setBackgroundResource(R.drawable.star_nine);
     }
 
     public void theme4() {
         backgroundLock.setBackgroundResource(R.drawable.bg_4);
-        Glide.with(this).load(R.drawable.ic_4delete).into(imgDelete);
-        Glide.with(this).load(R.drawable.ic_40).into(imgZero);
-        Glide.with(this).load(R.drawable.ic_41).into(imgOne);
-        Glide.with(this).load(R.drawable.ic_42).into(imgTwo);
-        Glide.with(this).load(R.drawable.ic_43).into(imgThree);
-        Glide.with(this).load(R.drawable.ic_44).into(imgFour);
-        Glide.with(this).load(R.drawable.ic_45).into(imgFive);
-        Glide.with(this).load(R.drawable.ic_46).into(imgSix);
-        Glide.with(this).load(R.drawable.ic_47).into(imgSeven);
-        Glide.with(this).load(R.drawable.ic_48).into(imgEight);
-        Glide.with(this).load(R.drawable.ic_49).into(imgNine);
+        imgDelete.setBackgroundResource(R.drawable.pentagon_delete);
+        imgZero.setBackgroundResource(R.drawable.pentagon_zero);
+        imgOne.setBackgroundResource(R.drawable.pentagon_one);
+        imgTwo.setBackgroundResource(R.drawable.pentagon_two);
+        imgThree.setBackgroundResource(R.drawable.pentagon_three);
+        imgFour.setBackgroundResource(R.drawable.pentagon_four);
+        imgFive.setBackgroundResource(R.drawable.pentagon_five);
+        imgSix.setBackgroundResource(R.drawable.pentagon_six);
+        imgSeven.setBackgroundResource(R.drawable.pentagon_seven);
+        imgEight.setBackgroundResource(R.drawable.pentagon_eight);
+        imgNine.setBackgroundResource(R.drawable.pentagon_nine);
+
     }
 
     public void theme5() {
         backgroundLock.setBackgroundResource(R.drawable.bg_5);
-        Glide.with(this).load(R.drawable.ic_5delete).into(imgDelete);
-        Glide.with(this).load(R.drawable.ic_50).into(imgZero);
-        Glide.with(this).load(R.drawable.ic_51).into(imgOne);
-        Glide.with(this).load(R.drawable.ic_52).into(imgTwo);
-        Glide.with(this).load(R.drawable.ic_53).into(imgThree);
-        Glide.with(this).load(R.drawable.ic_54).into(imgFour);
-        Glide.with(this).load(R.drawable.ic_55).into(imgFive);
-        Glide.with(this).load(R.drawable.ic_56).into(imgSix);
-        Glide.with(this).load(R.drawable.ic_57).into(imgSeven);
-        Glide.with(this).load(R.drawable.ic_58).into(imgEight);
-        Glide.with(this).load(R.drawable.ic_59).into(imgNine);
+        imgDelete.setBackgroundResource(R.drawable.love_delete);
+        imgZero.setBackgroundResource(R.drawable.love_zero);
+        imgOne.setBackgroundResource(R.drawable.love_one);
+        imgTwo.setBackgroundResource(R.drawable.love_two);
+        imgThree.setBackgroundResource(R.drawable.love_three);
+        imgFour.setBackgroundResource(R.drawable.love_four);
+        imgFive.setBackgroundResource(R.drawable.love_five);
+        imgSix.setBackgroundResource(R.drawable.love_six);
+        imgSeven.setBackgroundResource(R.drawable.love_seven);
+        imgEight.setBackgroundResource(R.drawable.love_eight);
+        imgNine.setBackgroundResource(R.drawable.love_nine);
+
     }
 
     public void theme6() {
         backgroundLock.setBackgroundResource(R.drawable.bg_6);
-        Glide.with(this).load(R.drawable.ic_6delete).into(imgDelete);
-        Glide.with(this).load(R.drawable.ic_60).into(imgZero);
-        Glide.with(this).load(R.drawable.ic_61).into(imgOne);
-        Glide.with(this).load(R.drawable.ic_62).into(imgTwo);
-        Glide.with(this).load(R.drawable.ic_63).into(imgThree);
-        Glide.with(this).load(R.drawable.ic_64).into(imgFour);
-        Glide.with(this).load(R.drawable.ic_65).into(imgFive);
-        Glide.with(this).load(R.drawable.ic_66).into(imgSix);
-        Glide.with(this).load(R.drawable.ic_67).into(imgSeven);
-        Glide.with(this).load(R.drawable.ic_68).into(imgEight);
-        Glide.with(this).load(R.drawable.ic_69).into(imgNine);
+        imgDelete.setBackgroundResource(R.drawable.shield_delete);
+        imgZero.setBackgroundResource(R.drawable.shield_zero);
+        imgOne.setBackgroundResource(R.drawable.shield_one);
+        imgTwo.setBackgroundResource(R.drawable.shield_two);
+        imgThree.setBackgroundResource(R.drawable.shield_three);
+        imgFour.setBackgroundResource(R.drawable.shield_four);
+        imgFive.setBackgroundResource(R.drawable.shield_five);
+        imgSix.setBackgroundResource(R.drawable.shield_six);
+        imgSeven.setBackgroundResource(R.drawable.shield_seven);
+        imgEight.setBackgroundResource(R.drawable.shield_eight);
+        imgNine.setBackgroundResource(R.drawable.shield_nine);
+
     }
 
 

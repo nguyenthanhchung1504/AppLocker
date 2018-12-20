@@ -24,6 +24,9 @@ public class ConfirmChangePassword extends CreatePinActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.confirm_change_password));
+        txtCreateYourPassword.setVisibility(View.INVISIBLE);
+        txtTwo.setVisibility(View.VISIBLE);
+        txtTwo.setText(getString(R.string.confirm_change_password));
         utils = new SharedPreferenceUtils(this);
         changePassword = utils.getStringValue(Constant.CHANGE_PASSWORD,"");
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);

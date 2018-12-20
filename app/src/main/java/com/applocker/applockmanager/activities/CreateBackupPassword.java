@@ -22,6 +22,9 @@ public class CreateBackupPassword extends CreatePinActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.backup_password));
+        txtCreateYourPassword.setVisibility(View.INVISIBLE);
+        txtTwo.setVisibility(View.VISIBLE);
+        txtTwo.setText(getString(R.string.backup_password));
         utils = new SharedPreferenceUtils(this);
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         txtOk.setOnClickListener(new View.OnClickListener() {

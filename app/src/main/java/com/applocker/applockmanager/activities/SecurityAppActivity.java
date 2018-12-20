@@ -40,6 +40,8 @@ public class SecurityAppActivity extends CreatePinActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.protect_your_privacy_and_secrets));
+        txtCreateYourPassword.setVisibility(View.VISIBLE);
+        txtTwo.setVisibility(View.GONE);
         utils = new SharedPreferenceUtils(this);
         passConfirm = utils.getStringValue(Constant.PASSWORD_CONFIRM, "");
         passBackup = utils.getStringValue(Constant.CONFIRM_BACKUP_PASSWORD, "");
@@ -66,7 +68,10 @@ public class SecurityAppActivity extends CreatePinActivity {
                 mediaPlayer.stop();
             }
         }else if (error_number>num){
-            System.exit(0);
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
         }
     }
     private void requestPassword() {
@@ -101,8 +106,10 @@ public class SecurityAppActivity extends CreatePinActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         startActivity(new Intent(SecurityAppActivity.this,SettingActivity.class));
+                        finish();
                         dialogInterface.dismiss();
                         utils.setValue(Constant.SAVE_ERROR_NUMBER,0);
+                        utils.setValue(Constant.SWITCH_ON_OFF,false);
                     }
                 });
                 AlertDialog alertDialog = builder.create();

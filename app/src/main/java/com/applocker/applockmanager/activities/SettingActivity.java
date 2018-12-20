@@ -86,8 +86,8 @@ public class SettingActivity extends AppCompatActivity {
             } else {
                 startService(intent);
             }
-        } else {
-            swOnOff.setBackgroundResource(R.drawable.ic_off);
+        } else if (checkOnOf == false){
+           swOnOff.setBackgroundResource(R.drawable.ic_off);
             Intent intent = new Intent(this, AppLockService.class);
             stopService(intent);
         }
@@ -97,12 +97,13 @@ public class SettingActivity extends AppCompatActivity {
         boolean checkSound;
         checkSound = utils.getBoolanValue(Constant.SWITCH_SOUND,true);
         if (checkSound == true){
-            swOnOff.setBackgroundResource(R.drawable.ic_on);
+            swSound.setBackgroundResource(R.drawable.ic_on);
+
         }
         else {
-            swOnOff.setBackgroundResource(R.drawable.ic_off);
-        }
+            swSound.setBackgroundResource(R.drawable.ic_off);
 
+        }
 
 
         swOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -115,10 +116,8 @@ public class SettingActivity extends AppCompatActivity {
                     startActivity(new Intent(SettingActivity.this, SecurityOnLockApp.class));
                     finish();
                 } else {
-                    boolean switch_off_access = utils.getBoolanValue(Constant.SWITCH_ON_OFF, true);
-                    swOnOff.setChecked(switch_off_access);
+                    swOnOff.setChecked(false);
                     swOnOff.setBackgroundResource(R.drawable.ic_off);
-                    utils.setValue(Constant.SWITCH_ON_OFF, switch_off_access);
                     startActivity(new Intent(SettingActivity.this, SecurityAppActivity.class));
                     finish();
                 }

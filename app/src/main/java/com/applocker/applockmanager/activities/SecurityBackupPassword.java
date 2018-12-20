@@ -33,6 +33,8 @@ public class SecurityBackupPassword extends CreatePinActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.protect_your_privacy_and_secrets));
+        txtCreateYourPassword.setVisibility(View.VISIBLE);
+        txtTwo.setVisibility(View.GONE);
         utils = new SharedPreferenceUtils(this);
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         passConfirm = utils.getStringValue(Constant.PASSWORD_CONFIRM,"123123123");
@@ -60,7 +62,10 @@ public class SecurityBackupPassword extends CreatePinActivity {
                 mediaPlayer.stop();
             }
         }else if (error_number>num){
-            System.exit(0);
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
         }
     }
 

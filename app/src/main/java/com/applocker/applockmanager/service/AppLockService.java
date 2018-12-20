@@ -118,8 +118,7 @@ public class AppLockService extends Service {
                         if (appflag == 0 && status == 0) {
 
                             Intent i = new Intent(getApplicationContext(), RequestPasswordActivity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
                         } else {
                             stopSelf();

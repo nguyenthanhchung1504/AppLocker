@@ -31,6 +31,8 @@ public class SecurityChangePassword extends CreatePinActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.protect_your_privacy_and_secrets));
+        txtCreateYourPassword.setVisibility(View.VISIBLE);
+        txtTwo.setVisibility(View.GONE);
         utils = new SharedPreferenceUtils(this);
         passConfirm = utils.getStringValue(Constant.PASSWORD_CONFIRM, "123123123123123");
         passBackup = utils.getStringValue(Constant.CONFIRM_BACKUP_PASSWORD, "123123123123");
@@ -57,7 +59,10 @@ public class SecurityChangePassword extends CreatePinActivity {
                 mediaPlayer.stop();
             }
         }else if (error_number>num){
-            System.exit(0);
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
         }
     }
     private void requestPassword() {

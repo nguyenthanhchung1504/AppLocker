@@ -29,6 +29,9 @@ public class ConfirmBackupPassword extends CreatePinActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.confirm_change_password));
+        txtCreateYourPassword.setVisibility(View.INVISIBLE);
+        txtTwo.setVisibility(View.VISIBLE);
+        txtTwo.setText(getString(R.string.confirm_change_password));
         utils = new SharedPreferenceUtils(this);
         backupPassword = utils.getStringValue(Constant.BACKUP_PASSWORD,"");
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -48,7 +51,10 @@ public class ConfirmBackupPassword extends CreatePinActivity {
             mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
             mediaPlayer.start();
         }else if (error_number>num){
-            System.exit(0);
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
         }
     }
     private void requestPassword(){

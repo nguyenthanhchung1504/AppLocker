@@ -1,6 +1,5 @@
 package com.applocker.applockmanager.activities;
 
-import android.Manifest;
 import android.app.AppOpsManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,22 +8,22 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.CustomList;
+import com.applocker.applockmanager.fragment.ListAppFragment;
 import com.applocker.applockmanager.service.AppLockService;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
@@ -41,6 +40,8 @@ import butterknife.OnClick;
 public class AppList extends AppCompatActivity {
     @BindView(R.id.layout_main)
     ConstraintLayout layoutMain;
+    @BindView(R.id.constraintLayout2)
+    FrameLayout constraintLayout2;
     private ListView applist;
     private ImageView img_main, img_setting;
     private SharedPreferenceUtils utils;
@@ -50,6 +51,8 @@ public class AppList extends AppCompatActivity {
     ArrayList<String> appnameArray;
     ArrayList<Drawable> iconArray;
     ArrayAdapter<String> arrayAdapter;
+    private CustomList adapter;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +69,10 @@ public class AppList extends AppCompatActivity {
 
 
         if (!isAccessGranted()) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
-            Toast.makeText(this, "Permission is required", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Permission is required", Toast.LENGTH_SHORT).show();
         }
         if (check_on_off == true) {
             Intent intent = new Intent(this, AppLockService.class);
@@ -87,37 +91,37 @@ public class AppList extends AppCompatActivity {
         editor.putInt("flag", 1);
         editor.apply();
 
-        packagenameArray = new ArrayList<String>();
-        appnameArray = new ArrayList<String>();
-        iconArray = new ArrayList<Drawable>();
-
-        PackageManager packageManager = getPackageManager();
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-
-        Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
-
-        for (int i = 0; i < packs.size(); i++) {
-            ApplicationInfo p = packs.get(i);
-            if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                packagenameArray.add(p.packageName);
-                appnameArray.add(p.loadLabel(getPackageManager()).toString());
-                iconArray.add(p.loadIcon(getPackageManager()));
-            }
-            if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-                packagenameArray.add(p.packageName);
-                appnameArray.add(p.loadLabel(getPackageManager()).toString());
-                iconArray.add(p.loadIcon(getPackageManager()));
-            } else {
-//                 packagenameArray.add(p.packageName);
-//                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
-//                 iconArray.add(p.loadIcon(getPackageManager()));
-            }
-
-        }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, appnameArray);
+//        packagenameArray = new ArrayList<String>();
+//        appnameArray = new ArrayList<String>();
+//        iconArray = new ArrayList<Drawable>();
+//
+//        PackageManager packageManager = getPackageManager();
+//        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+//        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//
+//        List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+//
+//        Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
+//
+//        for (int i = 0; i < packs.size(); i++) {
+//            ApplicationInfo p = packs.get(i);
+//            if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+//                packagenameArray.add(p.packageName);
+//                appnameArray.add(p.loadLabel(getPackageManager()).toString());
+//                iconArray.add(p.loadIcon(getPackageManager()));
+//            }
+//            if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+//                packagenameArray.add(p.packageName);
+//                appnameArray.add(p.loadLabel(getPackageManager()).toString());
+//                iconArray.add(p.loadIcon(getPackageManager()));
+//            } else {
+////                 packagenameArray.add(p.packageName);
+////                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
+////                 iconArray.add(p.loadIcon(getPackageManager()));
+//            }
+//
+//        }
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, appnameArray);
 
 
         int pos = utils.getIntValue(Constant.CHANGE_THEME, 0);
@@ -139,31 +143,28 @@ public class AppList extends AppCompatActivity {
         if (pos == 5) {
             layoutMain.setBackgroundResource(R.drawable.bg_6);
         }
-        String[] Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
-        String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
-        Drawable[] Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
-        applist.setAdapter(new CustomList(this, Stringarray, Drawablearray, packagenameArray));
+//        String[] Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
+//        String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
+//        Drawable[] Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
+//        adapter = new CustomList(this, Stringarray, Drawablearray, packagenameArray);
+//        applist.setAdapter(adapter);
+
         Glide.with(this).load(R.drawable.ic_main).into(img_main);
         Glide.with(this).load(R.drawable.ic_setting).into(img_setting);
-
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.constraintLayout2, new ListAppFragment(), "aaa");
+        transaction.commit();
     }
 
 
     private boolean isAccessGranted() {
         try {
-            PackageManager packageManager = getPackageManager();
-            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(getPackageName(), 0);
-            AppOpsManager appOpsManager = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
-            int mode = 0;
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
-                        applicationInfo.uid, applicationInfo.packageName);
-            }
-            if (mode == AppOpsManager.MODE_DEFAULT) {
-                return this.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED;
-            } else {
-                return mode == AppOpsManager.MODE_ALLOWED;
-            }
+            PackageManager packageManager = this.getPackageManager();
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(this.getPackageName(), 0);
+            AppOpsManager appOpsManager = (AppOpsManager) this.getSystemService(Context.APP_OPS_SERVICE);
+            int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, applicationInfo.uid, applicationInfo.packageName);
+            return (mode == AppOpsManager.MODE_ALLOWED);
 
         } catch (PackageManager.NameNotFoundException e) {
             return false;

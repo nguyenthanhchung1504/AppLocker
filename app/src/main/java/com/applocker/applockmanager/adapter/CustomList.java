@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -68,6 +69,7 @@ public class CustomList extends BaseAdapter {
         return position;
     }
 
+
     public class Holder
     {
         TextView appname;
@@ -93,12 +95,9 @@ public class CustomList extends BaseAdapter {
         if (holder.appname.getText().toString().equals("App Locker")){
             holder.appswitch.setEnabled(false);
         }
-//        holder.appicon.setImageDrawable(result2[position]);
 
-
-
-
-        Glide.with(context).load(result2[position]).into(holder.appicon);
+        holder.appicon.setImageDrawable(resize(result2[position]));
+//        Glide.with(context).load(result2[position]).into(holder.appicon);
         holder.appicon.setDrawingCacheEnabled(true);
 
 
@@ -170,6 +169,12 @@ public class CustomList extends BaseAdapter {
             Log.d("All Data ",been.getAppName());
         }
 
+    }
+
+    private Drawable resize(Drawable image) {
+        Bitmap b = ((BitmapDrawable)image).getBitmap();
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 50, 50, false);
+        return new BitmapDrawable(context.getResources(), bitmapResized);
     }
 
 }

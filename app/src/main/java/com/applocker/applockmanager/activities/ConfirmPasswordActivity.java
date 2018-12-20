@@ -29,6 +29,9 @@ public class ConfirmPasswordActivity extends CreatePinActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         txtCreateYourPassword.setText(getString(R.string.confirm_your_password));
+        txtCreateYourPassword.setVisibility(View.INVISIBLE);
+        txtTwo.setVisibility(View.VISIBLE);
+        txtTwo.setText(getString(R.string.confirm_change_password));
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         utils = new SharedPreferenceUtils(this);
         passwordCreate = utils.getStringValue(Constant.PASSWORD_CREATE,"");
@@ -68,6 +71,7 @@ public class ConfirmPasswordActivity extends CreatePinActivity {
                 utils.setValue(Constant.PASSWORD_CONFIRM, passwordConfirm);
                 utils.setValue(Constant.PREFERENCES_SECOND, true);
                 startActivity(new Intent(this, AppList.class));
+                finish();
             } else {
                 edt1.setText(null);
                 edt2.setText(null);
