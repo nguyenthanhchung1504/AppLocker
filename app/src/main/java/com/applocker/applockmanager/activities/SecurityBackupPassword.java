@@ -104,7 +104,7 @@ public class SecurityBackupPassword extends CreatePinActivity {
                 utils.setValue(Constant.SAVE_ERROR_NUMBER,number_entered);
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.app_name));
-                builder.setMessage(R.string.wrong_password);
+                builder.setMessage(R.string.wrong_password_security);
                 builder.setCancelable(false);
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override

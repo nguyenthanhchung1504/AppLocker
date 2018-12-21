@@ -114,12 +114,9 @@ public class AppLockService extends Service {
                         appname = getForegroundApp();
 
                         if (appflag == 0 && status == 0) {
-
                             Intent i = new Intent(getApplicationContext(), RequestPasswordActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
-                        } else {
-                            stopSelf();
                         }
 
                     }
@@ -133,7 +130,7 @@ public class AppLockService extends Service {
         initNotification();
         createNotificationChannel();
 
-        return super.onStartCommand(intent, flags, startId);
+       return START_STICKY;
 //        return START_NOT_STICKY;
 
     }

@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.databases.Database;
 import com.applocker.applockmanager.models.Been;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,9 @@ public class CustomList extends BaseAdapter {
         context=appList;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
+   
+
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
@@ -89,9 +94,9 @@ public class CustomList extends BaseAdapter {
             holder.appswitch.setEnabled(false);
         }
 
-        holder.appicon.setImageDrawable(resize(result2[position]));
+        holder.appicon.setImageDrawable((result2[position]));
 //        Glide.with(context).load(result2[position]).into(holder.appicon);
-        holder.appicon.setDrawingCacheEnabled(true);
+        holder.appicon.setDrawingCacheEnabled(false);
 //        holder.appswitch.setVisibility(View.GONE);
 
 
@@ -166,7 +171,7 @@ public class CustomList extends BaseAdapter {
 
     private Drawable resize(Drawable image) {
         Bitmap b = ((BitmapDrawable)image).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 50, 50, false);
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, 800, 800, false);
         return new BitmapDrawable(context.getResources(), bitmapResized);
     }
 

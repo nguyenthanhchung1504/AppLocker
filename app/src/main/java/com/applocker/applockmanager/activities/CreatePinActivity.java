@@ -40,7 +40,7 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
     @BindView(R.id.txt_create_your_password)
     protected TextView txtCreateYourPassword;
     @BindView(R.id.txt_ok)
-    protected Button txtOk;
+    protected TextView txtOk;
     @BindView(R.id.img_zero)
     ImageView imgZero;
     @BindView(R.id.img_delete)

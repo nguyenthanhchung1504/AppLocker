@@ -175,13 +175,13 @@ public class AppList extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == event.KEYCODE_BACK) {
-
-            Intent startMain = new Intent(Intent.ACTION_MAIN);
-            startMain.addCategory(Intent.CATEGORY_HOME);
-            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(startMain);
-
+            if (isAccessGranted()) {
+                Intent startMain = new Intent(Intent.ACTION_MAIN);
+                startMain.addCategory(Intent.CATEGORY_HOME);
+                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(startMain);
+            }
 
         }
 
@@ -197,13 +197,17 @@ public class AppList extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        finishAffinity();
+        if (isAccessGranted()) {
+            finishAffinity();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        finishAffinity();
+        if (isAccessGranted()) {
+            finishAffinity();
+        }
     }
 
 }

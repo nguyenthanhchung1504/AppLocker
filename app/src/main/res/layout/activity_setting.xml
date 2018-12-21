@@ -233,9 +233,7 @@
                 app:backGroundColor="@color/color_number_count"
                 app:layout_constraintBottom_toTopOf="@+id/sw_sound"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/textView7"

@@ -8,17 +8,17 @@
     android:background="@drawable/bg_1"
     tools:context="com.applocker.applockmanager.activities.CreatePinActivity">
 
-    <Button
-        android:background="@android:color/transparent"
+    <TextView
+
         android:gravity="center"
         android:id="@+id/txt_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:layout_marginRight="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_15sdp"
         android:text="@string/ok"
-        android:textColor="@android:color/white"
+        android:textColor="@drawable/text_ok_focus"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -328,15 +328,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
     <TextView
-        android:visibility="gone"
         android:id="@+id/txt_two"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center"
         android:text="@string/protect_your_privacy_and_secrets"
         android:textColor="@color/text_main_password"
         android:textSize="@dimen/_15sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/layout_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_create_your_password" />

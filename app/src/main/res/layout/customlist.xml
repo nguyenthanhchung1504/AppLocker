@@ -8,8 +8,8 @@
     <com.applocker.applockmanager.resizeimage.DynamicImageView
         android:scaleType="centerCrop"
         android:id="@+id/appimage"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
@@ -18,9 +18,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:ellipsize="end"
+        android:maxLines="1"
         android:id="@+id/appname"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_18sdp"
         android:layout_marginStart="@dimen/_7sdp"
         android:layout_marginEnd="@dimen/_7sdp"
         android:gravity="center|left"

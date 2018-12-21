@@ -1,6 +1,7 @@
 package com.applocker.applockmanager.activities;
 
 import android.app.ActivityManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
@@ -95,11 +97,11 @@ public class RequestPasswordActivity extends CreatePinActivity {
             }
         }else {
             if (passwordRequest.equals(passConfirm) || passwordRequest.equals(passBackup)) {
+                finish();
                 utils.setValue(Constant.SAVE_ERROR_NUMBER,0);
                 SharedPreferences.Editor editor = getSharedPreferences("Start", MODE_PRIVATE).edit();
                 editor.putInt("appflag", 1);
-                editor.apply();
-                finish();
+                editor.commit();
 
 
             } else {

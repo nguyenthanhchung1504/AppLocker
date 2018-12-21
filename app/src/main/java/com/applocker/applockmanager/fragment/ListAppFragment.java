@@ -1,22 +1,28 @@
 package com.applocker.applockmanager.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.CustomList;
+import com.applocker.applockmanager.models.Been;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 
 import java.util.ArrayList;
@@ -35,12 +41,16 @@ public class ListAppFragment extends Fragment {
     ListView applist;
     Unbinder unbinder;
     private SharedPreferenceUtils utils;
-    ArrayList<String> packagenameArray;
-    ArrayList<String> appnameArray;
-    ArrayList<Drawable> iconArray;
-    ArrayAdapter<String> arrayAdapter;
+    private ArrayList<String> packagenameArray;
+    private ArrayList<String> appnameArray;
+    private ArrayList<Drawable> iconArray;
+    private ArrayAdapter<String> arrayAdapter;
     private CustomList adapter;
-    ProgressDialog dialog;
+    private ProgressDialog dialog;
+    private String[] Stringarray;
+    private Drawable[] Drawablearray;
+    private View footerView;
+    private boolean isLoading = false;
     public ListAppFragment() {
         // Required empty public constructor
     }
@@ -104,27 +114,29 @@ public class ListAppFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             PackageManager packageManager = getContext().getPackageManager();
             Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            mainIntent.addCategory(Intent.CATEGORY_DEFAULT);
 
-            List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+            @SuppressLint("WrongConstant") List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_GIDS);
 
             Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
 
             for (int i = 0; i < packs.size(); i++) {
                 ApplicationInfo p = packs.get(i);
-                if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                    packagenameArray.add(p.packageName);
-                    appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-                    iconArray.add(p.loadIcon(getContext().getPackageManager()));
-                }
-                if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-                    packagenameArray.add(p.packageName);
-                    appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-                    iconArray.add(p.loadIcon(getContext().getPackageManager()));
-                } else {
-//                 packagenameArray.add(p.packageName);
-//                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
-//                 iconArray.add(p.loadIcon(getPackageManager()));
+                if(packageManager.getLaunchIntentForPackage(p.packageName) != null) {
+//                    if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                        packagenameArray.add(p.packageName);
+                        appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
+                        iconArray.add(p.loadIcon(getContext().getPackageManager()));
+//                    }
+//                    if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
+//                        packagenameArray.add(p.packageName);
+//                        appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
+//                        iconArray.add(p.loadIcon(getContext().getPackageManager()));
+//                    } else {
+////                 packagenameArray.add(p.packageName);
+////                 appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
+////                 iconArray.add(p.loadIcon(getContext().getPackageManager()));
+//                    }
                 }
 
             }
@@ -134,17 +146,21 @@ public class ListAppFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            String[] Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            footerView = inflater.inflate(R.layout.footer_view,null);
+
+            Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
             String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
-            Drawable[] Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
+            Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
             adapter = new CustomList(getContext(), Stringarray, Drawablearray, packagenameArray);
             applist.setAdapter(adapter);
+            applist.setScrollingCacheEnabled(false);
             dialog.dismiss();
         }
+
+
+
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
+
 }

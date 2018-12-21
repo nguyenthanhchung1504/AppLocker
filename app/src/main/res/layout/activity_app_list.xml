@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/img_main"
         android:layout_width="@dimen/_170sdp"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_height="@dimen/_70sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:src="@drawable/ic_main"
