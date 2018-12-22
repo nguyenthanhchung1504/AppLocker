@@ -7,6 +7,7 @@ import android.app.Service;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -55,8 +56,9 @@ public class AppLockService extends Service {
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
         try {
-            final long period = 2000;
+            final long period = 1000;
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -116,6 +118,7 @@ public class AppLockService extends Service {
                         if (appflag == 0 && status == 0) {
                             Intent i = new Intent(getApplicationContext(), RequestPasswordActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                         }
 
@@ -146,7 +149,7 @@ public class AppLockService extends Service {
             while (usageEvents.hasNextEvent()) {
                 usageEvents.getNextEvent(event);
             }
-            List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 1000, time);
+            List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 10, time);
 
             if (appList != null && appList.size() > 0) {
                 TreeMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
@@ -159,8 +162,9 @@ public class AppLockService extends Service {
             }
         } else {
             ActivityManager am = (ActivityManager) this.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-            List<ActivityManager.RunningAppProcessInfo> tasks = am.getRunningAppProcesses();
-            currentApp = tasks.get(0).processName;
+            List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+            ComponentName componentName = tasks.get(0).topActivity;
+            currentApp = componentName.getPackageName();
         }
 
         return currentApp;

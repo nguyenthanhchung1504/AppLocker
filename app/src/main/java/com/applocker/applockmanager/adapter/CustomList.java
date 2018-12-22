@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,7 @@ public class CustomList extends BaseAdapter {
 
     public class Holder
     {
+        ConstraintLayout itemapp;
         TextView appname;
         ImageView appicon;
         ToggleButton appswitch;
@@ -86,12 +88,16 @@ public class CustomList extends BaseAdapter {
         holder.appname= convertView.findViewById(R.id.appname);
         holder.appicon= convertView.findViewById(R.id.appimage);
         holder.appswitch= convertView.findViewById(R.id.appswitch);
+        holder.itemapp = convertView.findViewById(R.id.item_app);
         holder.appswitch.setText(null);
         holder.appswitch.setTextOn(null);
         holder.appswitch.setTextOff(null);
         holder.appname.setText(result1[position]);
         if (holder.appname.getText().toString().equals("App Locker")){
             holder.appswitch.setEnabled(false);
+//            holder.itemapp.setVisibility(View.GONE);
+            result4.remove(holder.appname.getText().toString().equals(R.string.app_name));
+            notifyDataSetChanged();
         }
 
         holder.appicon.setImageDrawable((result2[position]));

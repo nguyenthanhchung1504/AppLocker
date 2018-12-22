@@ -37,6 +37,7 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 public class ListAppFragment extends Fragment {
+    private PackageManager packageManager = null;
     @BindView(R.id.applist)
     ListView applist;
     Unbinder unbinder;
@@ -51,6 +52,7 @@ public class ListAppFragment extends Fragment {
     private Drawable[] Drawablearray;
     private View footerView;
     private boolean isLoading = false;
+
     public ListAppFragment() {
         // Required empty public constructor
     }
@@ -101,12 +103,13 @@ public class ListAppFragment extends Fragment {
         new MyAsyncTask().execute();
         return view;
     }
-    public class MyAsyncTask extends AsyncTask<Void,Void,Void>{
+
+    public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Loading data...");
+            dialog.setMessage(getString(R.string.loading_data));
             dialog.show();
         }
 
@@ -114,29 +117,28 @@ public class ListAppFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             PackageManager packageManager = getContext().getPackageManager();
             Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-            mainIntent.addCategory(Intent.CATEGORY_DEFAULT);
+            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-            @SuppressLint("WrongConstant") List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_GIDS);
-
+            @SuppressLint("WrongConstant") List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
             Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
 
             for (int i = 0; i < packs.size(); i++) {
                 ApplicationInfo p = packs.get(i);
-                if(packageManager.getLaunchIntentForPackage(p.packageName) != null) {
-//                    if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                        packagenameArray.add(p.packageName);
-                        appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-                        iconArray.add(p.loadIcon(getContext().getPackageManager()));
-//                    }
-//                    if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
-//                        packagenameArray.add(p.packageName);
-//                        appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-//                        iconArray.add(p.loadIcon(getContext().getPackageManager()));
-//                    } else {
-////                 packagenameArray.add(p.packageName);
-////                 appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-////                 iconArray.add(p.loadIcon(getContext().getPackageManager()));
-//                    }
+                if (packageManager.getLaunchIntentForPackage(p.packageName) != null) {
+                    if (!p.packageName.equals("com.applocker.applockmanager")) {
+                        if (!p.packageName.contains("launcher3")) {
+                            if (!p.packageName.contains("launcher")) {//com.google.android.googlequicksearchbox
+                                if (!p.packageName.contains("trebuchet")) {
+                                    if (null != packageManager.getLaunchIntentForPackage(p.packageName)) {
+                                        packagenameArray.add(p.packageName);
+                                        appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
+                                        iconArray.add(p.loadIcon(getContext().getPackageManager()));
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -147,7 +149,7 @@ public class ListAppFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            footerView = inflater.inflate(R.layout.footer_view,null);
+            footerView = inflater.inflate(R.layout.footer_view, null);
 
             Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
             String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
@@ -157,8 +159,6 @@ public class ListAppFragment extends Fragment {
             applist.setScrollingCacheEnabled(false);
             dialog.dismiss();
         }
-
-
 
     }
 
