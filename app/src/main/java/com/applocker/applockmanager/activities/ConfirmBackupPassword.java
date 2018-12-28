@@ -45,18 +45,18 @@ public class ConfirmBackupPassword extends CreatePinActivity {
         mediaPlayer = new MediaPlayer();
 
     }
-    private void errorNumber() {
-        int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
-        if (error_number==num){
-            mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
-            mediaPlayer.start();
-        }else if (error_number>num){
-            Intent startMain = new Intent(Intent.ACTION_MAIN);
-            startMain.addCategory(Intent.CATEGORY_HOME);
-            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(startMain);
-        }
-    }
+//    private void errorNumber() {
+//        int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
+//        if (error_number==num){
+//            mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+//            mediaPlayer.start();
+//        }else if (error_number>num){
+//            Intent startMain = new Intent(Intent.ACTION_MAIN);
+//            startMain.addCategory(Intent.CATEGORY_HOME);
+//            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(startMain);
+//        }
+//    }
     private void requestPassword(){
         confirmBackupPassword = edt1.getText().toString() + edt2.getText().toString() + edt3.getText().toString() + edt4.getText().toString() + edt5.getText().toString();
         if (confirmBackupPassword.isEmpty()){
@@ -85,7 +85,6 @@ public class ConfirmBackupPassword extends CreatePinActivity {
                 startActivity(new Intent(this, SettingActivity.class));
                 finish();
             } else {
-                Toast.makeText(this, getString(R.string.not_correct_password_create), Toast.LENGTH_LONG).show();
                 edt1.setText(null);
                 edt2.setText(null);
                 edt3.setText(null);

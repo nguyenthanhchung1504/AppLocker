@@ -1,19 +1,23 @@
 package com.applocker.applockmanager.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.adapter.ThemeAdapter;
 import com.applocker.applockmanager.models.Theme;
+import com.applocker.applockmanager.utils.Ads;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
+import com.zer.android.newsdk.ZAndroidSDK;
 
 import java.util.ArrayList;
 
@@ -26,7 +30,9 @@ public class ChangeThemeActivity extends AppCompatActivity {
     @BindView(R.id.lst_theme)
     RecyclerView lstTheme;
     @BindView(R.id.layout_change_theme)
-    ConstraintLayout layoutChangeTheme;
+    RelativeLayout layoutChangeTheme;
+    @BindView(R.id.layout_ads)
+    RelativeLayout layoutAds;
     private ThemeAdapter adapter;
     private SharedPreferenceUtils utils;
 
@@ -69,19 +75,36 @@ public class ChangeThemeActivity extends AppCompatActivity {
         lstTheme.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Ads.f(this);
     }
 
     @OnClick(R.id.img_back)
     public void onViewClicked() {
-        startActivity(new Intent(this,SettingActivity.class));
+        startActivity(new Intent(this, SettingActivity.class));
         finish();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == event.KEYCODE_BACK){
-            startActivity(new Intent(this,SettingActivity.class));
+        if (keyCode == event.KEYCODE_BACK) {
+            startActivity(new Intent(this, SettingActivity.class));
             finish();
         }
         return false;

@@ -96,7 +96,7 @@ public class CustomList extends BaseAdapter {
         if (holder.appname.getText().toString().equals("App Locker")){
             holder.appswitch.setEnabled(false);
 //            holder.itemapp.setVisibility(View.GONE);
-            result4.remove(holder.appname.getText().toString().equals(R.string.app_name));
+//            result4.remove(holder.appname.getText().toString().equals(R.string.app_name));
             notifyDataSetChanged();
         }
 

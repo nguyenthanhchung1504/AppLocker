@@ -52,7 +52,7 @@ public class ListAppFragment extends Fragment {
     private Drawable[] Drawablearray;
     private View footerView;
     private boolean isLoading = false;
-
+    private MyAsyncTask myAsyncTask;
     public ListAppFragment() {
         // Required empty public constructor
     }
@@ -68,39 +68,9 @@ public class ListAppFragment extends Fragment {
         packagenameArray = new ArrayList<String>();
         appnameArray = new ArrayList<String>();
         iconArray = new ArrayList<Drawable>();
-
-//        PackageManager packageManager = getContext().getPackageManager();
-//        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-//        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//
-//        List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-//
-//        Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
-//
-//        for (int i = 0; i < packs.size(); i++) {
-//            ApplicationInfo p = packs.get(i);
-//            if ((packs.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-//                packagenameArray.add(p.packageName);
-//                appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-//                iconArray.add(p.loadIcon(getContext().getPackageManager()));
-//            }
-//            if ((packs.get(i).flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
-//                packagenameArray.add(p.packageName);
-//                appnameArray.add(p.loadLabel(getContext().getPackageManager()).toString());
-//                iconArray.add(p.loadIcon(getContext().getPackageManager()));
-//            } else {
-////                 packagenameArray.add(p.packageName);
-////                 appnameArray.add(p.loadLabel(getPackageManager()).toString());
-////                 iconArray.add(p.loadIcon(getPackageManager()));
-//            }
-//
-//        }
-//        String[] Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
-//        String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
-//        Drawable[] Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
-//        adapter = new CustomList(getContext(), Stringarray, Drawablearray, packagenameArray);
-//        applist.setAdapter(adapter);
-        new MyAsyncTask().execute();
+        myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute();
+//        new MyAsyncTask().execute();
         return view;
     }
 
@@ -120,7 +90,7 @@ public class ListAppFragment extends Fragment {
             mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-            @SuppressLint("WrongConstant") List<ApplicationInfo> packs = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+            List<ApplicationInfo> packs = packageManager.getInstalledApplications(0);
             Collections.sort(packs, new ApplicationInfo.DisplayNameComparator(packageManager));
 
             for (int i = 0; i < packs.size(); i++) {
@@ -148,19 +118,35 @@ public class ListAppFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            footerView = inflater.inflate(R.layout.footer_view, null);
-
             Stringarray = appnameArray.toArray(new String[appnameArray.size()]);
             String[] Stringarray1 = packagenameArray.toArray(new String[packagenameArray.size()]);
             Drawablearray = iconArray.toArray(new Drawable[iconArray.size()]);
             adapter = new CustomList(getContext(), Stringarray, Drawablearray, packagenameArray);
             applist.setAdapter(adapter);
             applist.setScrollingCacheEnabled(false);
-            dialog.dismiss();
+            if(dialog.isShowing()){
+                dialog.dismiss();
+            }
         }
 
     }
 
+    @Override
+    public void onStop() {
+        if(dialog != null ){
+            dialog.cancel();
+            myAsyncTask.cancel(true);
+            getActivity().finishAffinity();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(dialog != null ){
+            dialog.cancel();
+        }
+    }
 
 }

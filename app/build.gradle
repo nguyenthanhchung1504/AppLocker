@@ -6,7 +6,7 @@ android {
         applicationId "com.applocker.applockmanager"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4
+        versionCode 6
         versionName "3.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,4 +37,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }

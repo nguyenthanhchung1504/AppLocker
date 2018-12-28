@@ -31,8 +31,8 @@ public class ConfirmPasswordActivity extends CreatePinActivity {
         txtCreateYourPassword.setText(getString(R.string.confirm_your_password));
         txtCreateYourPassword.setVisibility(View.INVISIBLE);
         txtTwo.setVisibility(View.VISIBLE);
-        txtTwo.setText(getString(R.string.confirm_change_password));
-        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        txtTwo.setText(getString(R.string.confirm_your_password));
+//        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         utils = new SharedPreferenceUtils(this);
         passwordCreate = utils.getStringValue(Constant.PASSWORD_CREATE,"");
         txtOk.setOnClickListener(new View.OnClickListener() {
@@ -59,12 +59,12 @@ public class ConfirmPasswordActivity extends CreatePinActivity {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-                //deprecated in API 26
-                v.vibrate(2000);
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
+//            } else {
+//                //deprecated in API 26
+//                v.vibrate(2000);
+//            }
         }
         else {
             if (passwordConfirm.equals(passwordCreate)) {
@@ -83,12 +83,12 @@ public class ConfirmPasswordActivity extends CreatePinActivity {
                 edt3.setBackgroundResource(R.drawable.circle_textview);
                 edt4.setBackgroundResource(R.drawable.circle_textview);
                 edt5.setBackgroundResource(R.drawable.circle_textview);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    //deprecated in API 26
-                    v.vibrate(2000);
-                }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
+//                } else {
+//                    //deprecated in API 26
+//                    v.vibrate(2000);
+//                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.app_name));
                 builder.setMessage(R.string.not_correct_password_create);

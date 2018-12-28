@@ -51,11 +51,11 @@ public class SecurityChangePassword extends CreatePinActivity {
         int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
         if (error_number==num){
             if (sound == true){
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.start();
             }
             else {
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.stop();
             }
         }else if (error_number>num){
@@ -92,6 +92,9 @@ public class SecurityChangePassword extends CreatePinActivity {
                 finish();
                 utils.setValue(Constant.SAVE_ERROR_NUMBER,0);
             } else {
+                if (mediaPlayer!=null){
+                    mediaPlayer.stop();
+                }
                 number_entered = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
                 number_entered = number_entered +1;
                 utils.setValue(Constant.SAVE_ERROR_NUMBER,number_entered);

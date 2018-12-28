@@ -54,11 +54,11 @@ public class SecurityBackupPassword extends CreatePinActivity {
         int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
         if (error_number==num){
             if (sound == true){
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.start();
             }
             else {
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.stop();
             }
         }else if (error_number>num){
@@ -94,6 +94,9 @@ public class SecurityBackupPassword extends CreatePinActivity {
         }
         else {
             if (passwordRequest.equals(passConfirm) || passwordRequest.equals(passBackup)) {
+                if (mediaPlayer!=null){
+                    mediaPlayer.stop();
+                }
                 startActivity(new Intent(this, CreateBackupPassword.class));
                 finish();
                 utils.setValue(Constant.SAVE_ERROR_NUMBER,0);

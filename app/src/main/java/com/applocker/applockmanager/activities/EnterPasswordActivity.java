@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,15 +13,10 @@ import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.applocker.applockmanager.R;
-import com.applocker.applockmanager.service.AppLockService;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class EnterPasswordActivity extends CreatePinActivity {
     private String passwordRequest;
@@ -61,11 +55,11 @@ public class EnterPasswordActivity extends CreatePinActivity {
         int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
         if (error_number==num){
             if (sound == true){
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.start();
             }
             else {
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.stop();
             }
 
@@ -120,7 +114,7 @@ public class EnterPasswordActivity extends CreatePinActivity {
                 };
 
                 Handler pdCanceller = new Handler();
-                pdCanceller.postDelayed(progressRunnable, 3000);
+                pdCanceller.postDelayed(progressRunnable, 1000);
 
 
             } else {
@@ -172,4 +166,5 @@ public class EnterPasswordActivity extends CreatePinActivity {
         }
         return false;
     }
+
 }

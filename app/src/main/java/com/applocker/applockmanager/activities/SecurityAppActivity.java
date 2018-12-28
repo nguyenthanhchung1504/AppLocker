@@ -1,8 +1,5 @@
 package com.applocker.applockmanager.activities;
 
-import android.app.ActivityManager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,16 +12,10 @@ import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.applocker.applockmanager.R;
-import com.applocker.applockmanager.service.AppLockService;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
-
-import java.util.List;
-
-import static com.applocker.applockmanager.utils.Constant.MAGICAL_NUMBER;
 
 public class SecurityAppActivity extends CreatePinActivity {
     private String passwordRequest;
@@ -60,11 +51,11 @@ public class SecurityAppActivity extends CreatePinActivity {
         int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
         if (error_number==num){
             if (sound == true){
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.start();
             }
             else {
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.stop();
             }
         }else if (error_number>num){
@@ -97,6 +88,9 @@ public class SecurityAppActivity extends CreatePinActivity {
             }
         } else {
             if (passwordRequest.equals(passConfirm) || passwordRequest.equals(passBackup)) {
+                if (mediaPlayer!=null){
+                    mediaPlayer.stop();
+                }
                 utils.setValue(Constant.SWITCH_ON_OFF, false);
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.app_name));

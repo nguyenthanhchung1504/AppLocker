@@ -2,7 +2,11 @@ package com.applocker.applockmanager.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,16 +14,20 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.applocker.applockmanager.R;
+import com.applocker.applockmanager.utils.Ads;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.zer.android.newsdk.ZAndroidSDK;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,11 +72,13 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
     @BindView(R.id.img_three)
     ImageView imgThree;
     @BindView(R.id.background_lock)
-    ConstraintLayout backgroundLock;
+    RelativeLayout backgroundLock;
     @BindView(R.id.progressBar)
     protected ProgressBar progressBar;
     @BindView(R.id.txt_two)
     TextView txtTwo;
+    @BindView(R.id.layout_ads)
+    RelativeLayout layoutAds;
     private String password;
 
     protected SharedPreferenceUtils utils;
@@ -116,6 +126,25 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
         txtCreateYourPassword.setVisibility(View.INVISIBLE);
         txtTwo.setVisibility(View.VISIBLE);
         txtTwo.setText(getString(R.string.create_your_password));
+
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Ads.f(this);
 
 
     }
@@ -267,101 +296,487 @@ public class CreatePinActivity extends AppCompatActivity implements View.OnClick
         } else {
             utils.setValue(Constant.PASSWORD_CREATE, password);
             startActivity(new Intent(this, ConfirmPasswordActivity.class));
+            finish();
         }
 
     }
 
     public void themeDefault() {
         backgroundLock.setBackgroundResource(R.drawable.bg_1);
-        imgDelete.setBackgroundResource(R.drawable.normal_del);
-        imgZero.setBackgroundResource(R.drawable.normal_zero);
-        imgOne.setBackgroundResource(R.drawable.normal_one);
-        imgTwo.setBackgroundResource(R.drawable.normal_two);
-        imgThree.setBackgroundResource(R.drawable.normal_three);
-        imgFour.setBackgroundResource(R.drawable.normal_four);
-        imgFive.setBackgroundResource(R.drawable.normal_five);
-        imgSix.setBackgroundResource(R.drawable.normal_six);
-        imgSeven.setBackgroundResource(R.drawable.normal_seven);
-        imgEight.setBackgroundResource(R.drawable.normal_eight);
-        imgNine.setBackgroundResource(R.drawable.normal_nine);
+        Glide.with(this).load(R.drawable.normal_del).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgDelete.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_zero).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgZero.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_one).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgOne.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_two).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgTwo.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_three).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgThree.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_four).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFour.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_five).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFive.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_six).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSix.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_seven).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSeven.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_eight).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgEight.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.normal_nine).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgNine.setBackground(resource);
+            }
+        });
     }
 
     public void theme2() {
         backgroundLock.setBackgroundResource(R.drawable.bg_2);
-        imgDelete.setBackgroundResource(R.drawable.ring_delete);
-        imgZero.setBackgroundResource(R.drawable.ring_zero);
-        imgOne.setBackgroundResource(R.drawable.ring_one);
-        imgTwo.setBackgroundResource(R.drawable.ring_two);
-        imgThree.setBackgroundResource(R.drawable.ring_three);
-        imgFour.setBackgroundResource(R.drawable.ring_four);
-        imgFive.setBackgroundResource(R.drawable.ring_five);
-        imgSix.setBackgroundResource(R.drawable.ring_six);
-        imgSeven.setBackgroundResource(R.drawable.ring_seven);
-        imgEight.setBackgroundResource(R.drawable.ring_eight);
-        imgNine.setBackgroundResource(R.drawable.ring_nine);
+//        imgDelete.setBackgroundResource(R.drawable.ring_delete);
+//        imgZero.setBackgroundResource(R.drawable.ring_zero);
+//        imgOne.setBackgroundResource(R.drawable.ring_one);
+//        imgTwo.setBackgroundResource(R.drawable.ring_two);
+//        imgThree.setBackgroundResource(R.drawable.ring_three);
+//        imgFour.setBackgroundResource(R.drawable.ring_four);
+//        imgFive.setBackgroundResource(R.drawable.ring_five);
+//        imgSix.setBackgroundResource(R.drawable.ring_six);
+//        imgSeven.setBackgroundResource(R.drawable.ring_seven);
+//        imgEight.setBackgroundResource(R.drawable.ring_eight);
+//        imgNine.setBackgroundResource(R.drawable.ring_nine);
+        Glide.with(this).load(R.drawable.ring_delete).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgDelete.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_zero).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgZero.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_one).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgOne.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_two).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgTwo.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_three).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgThree.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_four).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFour.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_five).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFive.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_six).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSix.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_seven).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSeven.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_eight).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgEight.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.ring_nine).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgNine.setBackground(resource);
+            }
+        });
 
     }
 
     public void theme3() {
         backgroundLock.setBackgroundResource(R.drawable.bg_3);
-        imgDelete.setBackgroundResource(R.drawable.star_delete);
-        imgZero.setBackgroundResource(R.drawable.star_zero);
-        imgOne.setBackgroundResource(R.drawable.star_one);
-        imgTwo.setBackgroundResource(R.drawable.star_two);
-        imgThree.setBackgroundResource(R.drawable.star_three);
-        imgFour.setBackgroundResource(R.drawable.star_four);
-        imgFive.setBackgroundResource(R.drawable.star_five);
-        imgSix.setBackgroundResource(R.drawable.star_six);
-        imgSeven.setBackgroundResource(R.drawable.star_seven);
-        imgEight.setBackgroundResource(R.drawable.star_eight);
-        imgNine.setBackgroundResource(R.drawable.star_nine);
+//        imgDelete.setBackgroundResource(R.drawable.star_delete);
+//        imgZero.setBackgroundResource(R.drawable.star_zero);
+//        imgOne.setBackgroundResource(R.drawable.star_one);
+//        imgTwo.setBackgroundResource(R.drawable.star_two);
+//        imgThree.setBackgroundResource(R.drawable.star_three);
+//        imgFour.setBackgroundResource(R.drawable.star_four);
+//        imgFive.setBackgroundResource(R.drawable.star_five);
+//        imgSix.setBackgroundResource(R.drawable.star_six);
+//        imgSeven.setBackgroundResource(R.drawable.star_seven);
+//        imgEight.setBackgroundResource(R.drawable.star_eight);
+//        imgNine.setBackgroundResource(R.drawable.star_nine);
+        Glide.with(this).load(R.drawable.star_delete).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgDelete.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_zero).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgZero.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_one).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgOne.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_two).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgTwo.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_three).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgThree.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_four).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFour.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_five).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFive.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_six).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSix.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_seven).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSeven.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_eight).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgEight.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.star_nine).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgNine.setBackground(resource);
+            }
+        });
     }
 
     public void theme4() {
         backgroundLock.setBackgroundResource(R.drawable.bg_4);
-        imgDelete.setBackgroundResource(R.drawable.pentagon_delete);
-        imgZero.setBackgroundResource(R.drawable.pentagon_zero);
-        imgOne.setBackgroundResource(R.drawable.pentagon_one);
-        imgTwo.setBackgroundResource(R.drawable.pentagon_two);
-        imgThree.setBackgroundResource(R.drawable.pentagon_three);
-        imgFour.setBackgroundResource(R.drawable.pentagon_four);
-        imgFive.setBackgroundResource(R.drawable.pentagon_five);
-        imgSix.setBackgroundResource(R.drawable.pentagon_six);
-        imgSeven.setBackgroundResource(R.drawable.pentagon_seven);
-        imgEight.setBackgroundResource(R.drawable.pentagon_eight);
-        imgNine.setBackgroundResource(R.drawable.pentagon_nine);
+//        imgDelete.setBackgroundResource(R.drawable.pentagon_delete);
+//        imgZero.setBackgroundResource(R.drawable.pentagon_zero);
+//        imgOne.setBackgroundResource(R.drawable.pentagon_one);
+//        imgTwo.setBackgroundResource(R.drawable.pentagon_two);
+//        imgThree.setBackgroundResource(R.drawable.pentagon_three);
+//        imgFour.setBackgroundResource(R.drawable.pentagon_four);
+//        imgFive.setBackgroundResource(R.drawable.pentagon_five);
+//        imgSix.setBackgroundResource(R.drawable.pentagon_six);
+//        imgSeven.setBackgroundResource(R.drawable.pentagon_seven);
+//        imgEight.setBackgroundResource(R.drawable.pentagon_eight);
+//        imgNine.setBackgroundResource(R.drawable.pentagon_nine);
+        Glide.with(this).load(R.drawable.pentagon_delete).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgDelete.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_zero).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgZero.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_one).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgOne.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_two).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgTwo.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_three).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgThree.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_four).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFour.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_five).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFive.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_six).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSix.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_seven).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSeven.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_eight).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgEight.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.pentagon_nine).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgNine.setBackground(resource);
+            }
+        });
 
     }
 
     public void theme5() {
         backgroundLock.setBackgroundResource(R.drawable.bg_5);
-        imgDelete.setBackgroundResource(R.drawable.love_delete);
-        imgZero.setBackgroundResource(R.drawable.love_zero);
-        imgOne.setBackgroundResource(R.drawable.love_one);
-        imgTwo.setBackgroundResource(R.drawable.love_two);
-        imgThree.setBackgroundResource(R.drawable.love_three);
-        imgFour.setBackgroundResource(R.drawable.love_four);
-        imgFive.setBackgroundResource(R.drawable.love_five);
-        imgSix.setBackgroundResource(R.drawable.love_six);
-        imgSeven.setBackgroundResource(R.drawable.love_seven);
-        imgEight.setBackgroundResource(R.drawable.love_eight);
-        imgNine.setBackgroundResource(R.drawable.love_nine);
+//        imgDelete.setBackgroundResource(R.drawable.love_delete);
+//        imgZero.setBackgroundResource(R.drawable.love_zero);
+//        imgOne.setBackgroundResource(R.drawable.love_one);
+//        imgTwo.setBackgroundResource(R.drawable.love_two);
+//        imgThree.setBackgroundResource(R.drawable.love_three);
+//        imgFour.setBackgroundResource(R.drawable.love_four);
+//        imgFive.setBackgroundResource(R.drawable.love_five);
+//        imgSix.setBackgroundResource(R.drawable.love_six);
+//        imgSeven.setBackgroundResource(R.drawable.love_seven);
+//        imgEight.setBackgroundResource(R.drawable.love_eight);
+//        imgNine.setBackgroundResource(R.drawable.love_nine);
+        Glide.with(this).load(R.drawable.love_delete).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgDelete.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_zero).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgZero.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_one).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgOne.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_two).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgTwo.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_three).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgThree.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_four).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFour.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_five).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFive.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_six).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSix.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_seven).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSeven.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_eight).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgEight.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.love_nine).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgNine.setBackground(resource);
+            }
+        });
 
     }
 
     public void theme6() {
         backgroundLock.setBackgroundResource(R.drawable.bg_6);
-        imgDelete.setBackgroundResource(R.drawable.shield_delete);
-        imgZero.setBackgroundResource(R.drawable.shield_zero);
-        imgOne.setBackgroundResource(R.drawable.shield_one);
-        imgTwo.setBackgroundResource(R.drawable.shield_two);
-        imgThree.setBackgroundResource(R.drawable.shield_three);
-        imgFour.setBackgroundResource(R.drawable.shield_four);
-        imgFive.setBackgroundResource(R.drawable.shield_five);
-        imgSix.setBackgroundResource(R.drawable.shield_six);
-        imgSeven.setBackgroundResource(R.drawable.shield_seven);
-        imgEight.setBackgroundResource(R.drawable.shield_eight);
-        imgNine.setBackgroundResource(R.drawable.shield_nine);
+//        imgDelete.setBackgroundResource(R.drawable.shield_delete);
+//        imgZero.setBackgroundResource(R.drawable.shield_zero);
+//        imgOne.setBackgroundResource(R.drawable.shield_one);
+//        imgTwo.setBackgroundResource(R.drawable.shield_two);
+//        imgThree.setBackgroundResource(R.drawable.shield_three);
+//        imgFour.setBackgroundResource(R.drawable.shield_four);
+//        imgFive.setBackgroundResource(R.drawable.shield_five);
+//        imgSix.setBackgroundResource(R.drawable.shield_six);
+//        imgSeven.setBackgroundResource(R.drawable.shield_seven);
+//        imgEight.setBackgroundResource(R.drawable.shield_eight);
+//        imgNine.setBackgroundResource(R.drawable.shield_nine);
+        Glide.with(this).load(R.drawable.shield_delete).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgDelete.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_zero).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgZero.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_one).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgOne.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_two).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgTwo.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_three).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgThree.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_four).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFour.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_five).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgFive.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_six).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSix.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_seven).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgSeven.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_eight).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgEight.setBackground(resource);
+            }
+        });
+        Glide.with(this).load(R.drawable.shield_nine).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                imgNine.setBackground(resource);
+            }
+        });
 
     }
 

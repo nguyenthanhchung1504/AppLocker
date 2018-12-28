@@ -21,7 +21,7 @@ public class Constant {
     public static final String NUMBER_ENTERED = "number entered";
     public static final String SAVE_ERROR_NUMBER = "save error number";
 
-
+    public static final String SAVE_KEY_LOCK_SCREEN = "key lock app";
 
 
 

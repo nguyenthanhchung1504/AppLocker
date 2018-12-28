@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">App Locker</string>
+    <string name="ok">ĐỒNG Ý</string>
+    <string name="protect_your_privacy_and_secrets">Bảo vệ sự riêng tư và bí mật của bạn!</string>
+    <string name="create_your_password">Tạo mật khẩu</string>
+    <string name="confirm_your_password">Xác nhận mật khẩu của bạn</string>
+    <string name="not_correct_password_create">Mật khẩu không khớp với mật khẩu đã tạo</string>
+    <string name="please_enter_your_password">Vui lòng nhập mật khẩu của bạn</string>
+    <string name="settings">Cài đặt</string>
+    <string name="turn_on_off_app_locker">Bật / tắt App Locker</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="change_theme">Thay đổi chủ đề</string>
+    <string name="intrusion_alert">Cảnh báo xâm nhập</string>
+    <string name="number_of_password_entered">Số lần sai</string>
+    <string name="sound">Âm thanh</string>
+    <string name="confirm_change_password">Xác nhận thay đổi mật khẩu</string>
+    <string name="please_reset_app">Giao diện đã được thay đổi, vui lòng khởi động lại ứng dụng</string>
+    <string name="backup_password">Mật khẩu dự phòng</string>
+    <string name="restart_app">Vui lòng tắt ứng dụng để hoàn tất cài đặt</string>
+    <string name="wrong_password">Mật khẩu sai xin vui lòng nhập lại. Bạn đã nhập sai:</string>
+    <string name="wrong_password_security">Mật khẩu sai xin vui lòng nhập lại.</string>
+    <string name="blank_password">Mật khẩu không thể để trống</string>
+    <string name="loading_data">Đang tải dữ liệu ...</string>
+    <string name="is_running">App Locker đang chạy!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

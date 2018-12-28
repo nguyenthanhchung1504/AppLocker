@@ -59,11 +59,11 @@ public class RequestPasswordActivity extends CreatePinActivity {
         int error_number = utils.getIntValue(Constant.SAVE_ERROR_NUMBER,0);
         if (error_number==num){
             if (sound == true){
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.start();
             }
             else {
-                mediaPlayer = MediaPlayer.create(this,R.raw.nhungbanchanlangle);
+                mediaPlayer = MediaPlayer.create(this,R.raw.canhbao);
                 mediaPlayer.stop();
             }
         }else if (error_number>num){
@@ -97,11 +97,16 @@ public class RequestPasswordActivity extends CreatePinActivity {
             }
         }else {
             if (passwordRequest.equals(passConfirm) || passwordRequest.equals(passBackup)) {
-                finish();
+                if (mediaPlayer!=null){
+                    mediaPlayer.stop();
+                }
+                finishAndRemoveTask();
+
                 utils.setValue(Constant.SAVE_ERROR_NUMBER,0);
                 SharedPreferences.Editor editor = getSharedPreferences("Start", MODE_PRIVATE).edit();
                 editor.putInt("appflag", 1);
-                editor.commit();
+                editor.apply();
+
 
 
             } else {
@@ -152,4 +157,6 @@ public class RequestPasswordActivity extends CreatePinActivity {
         }
         return false;
     }
+
+
 }

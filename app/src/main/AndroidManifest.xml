@@ -2,9 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.applocker.applockmanager">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -13,7 +19,15 @@
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission
+        android:name="com.applocker.applockmanager.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.applocker.applockmanager.permission.C2D_MESSAGE" />
+
     <application
+        android:name=".Application"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher_applock"
@@ -24,11 +38,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <meta-data
+            android:name="metadata"
+            android:value="applockmanager" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="8298000" />
         <activity
             android:name=".SplashScreenActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -38,28 +61,35 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.CreatePinActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.ConfirmPasswordActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activities.ListApplicationActivity" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.RequestPasswordActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:excludeFromRecents="true"
+            android:parentActivityName=".activities.AppList"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AppList" />
         </activity>
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:launchMode="singleTop"
             android:name=".activities.AppList"
             android:hardwareAccelerated="false"
@@ -71,85 +101,122 @@
             android:name=".activities.SettingActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.EnterPasswordActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.ChangePasswordActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.ConfirmChangePassword"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.ChangeThemeActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.CreateBackupPassword"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.ConfirmBackupPassword"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.SecurityBackupPassword"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.SecurityAppActivity"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.SecurityChangePassword"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|mcc|mnc"
             android:name=".activities.SecurityOnLockApp"
             android:hardwareAccelerated="false"
             android:largeHeap="true"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <service
-            android:name=".service.AppLockService"
-            android:enabled="true"
-            android:exported="true" />
+        <service android:name=".service.AppLockService"
+            android:exported = "true"/>
 
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:excludeFromRecents="true"
+            android:hardwareAccelerated="true"
+            android:icon="@drawable/ic_trans"
+            android:label="" />
+        <receiver
+            android:name="com.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.gcm.GCMIntentService" />
+
+        <receiver android:name="com.zer.android.newsdk.HandleInstall">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.zer.android.newsdk.zs">
+            <intent-filter>
+                <action android:name="com.zer.android.newsdk.ZS" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.zer.android.newsdk.anr" />
+        <receiver android:name="com.zer.android.newsdk.dbr">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

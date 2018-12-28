@@ -7,7 +7,7 @@
     android:layout_height="@dimen/_50sdp">
 
     <com.applocker.applockmanager.resizeimage.DynamicImageView
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:id="@+id/appimage"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
@@ -19,8 +19,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:ellipsize="end"
-        android:maxLines="1"
         android:id="@+id/appname"
         android:layout_width="0dp"
         android:layout_height="@dimen/_18sdp"

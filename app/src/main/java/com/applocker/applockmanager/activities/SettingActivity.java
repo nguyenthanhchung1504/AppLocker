@@ -10,15 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.applocker.applockmanager.R;
 import com.applocker.applockmanager.service.AppLockService;
+import com.applocker.applockmanager.utils.Ads;
 import com.applocker.applockmanager.utils.Constant;
 import com.applocker.applockmanager.utils.SharedPreferenceUtils;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.zer.android.newsdk.ZAndroidSDK;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,13 +33,15 @@ public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.txt_change_theme)
     TextView txtChangeTheme;
     @BindView(R.id.layout_setting)
-    ConstraintLayout layoutSetting;
+    RelativeLayout layoutSetting;
     @BindView(R.id.sw_on_off)
     ToggleButton swOnOff;
     @BindView(R.id.sw_sound)
     ToggleButton swSound;
     @BindView(R.id.btn_number)
     ElegantNumberButton btnNumber;
+    @BindView(R.id.layout_ads)
+    RelativeLayout layoutAds;
     private SharedPreferenceUtils utils;
     private boolean checkOnOf;
 
@@ -75,7 +79,7 @@ public class SettingActivity extends AppCompatActivity {
         checkOnOf = utils.getBoolanValue(Constant.SWITCH_ON_OFF, true);
         swOnOff.setChecked(checkOnOf);
 
-        int save_num = utils.getIntValue(Constant.NUMBER_ENTERED,3);
+        int save_num = utils.getIntValue(Constant.NUMBER_ENTERED, 3);
         btnNumber.setNumber(String.valueOf(save_num));
 
         if (checkOnOf == true) {
@@ -86,21 +90,19 @@ public class SettingActivity extends AppCompatActivity {
             } else {
                 startService(intent);
             }
-        } else if (checkOnOf == false){
-           swOnOff.setBackgroundResource(R.drawable.ic_off);
+        } else if (checkOnOf == false) {
+            swOnOff.setBackgroundResource(R.drawable.ic_off);
             Intent intent = new Intent(this, AppLockService.class);
             stopService(intent);
         }
 
 
-
         boolean checkSound;
-        checkSound = utils.getBoolanValue(Constant.SWITCH_SOUND,true);
-        if (checkSound == true){
+        checkSound = utils.getBoolanValue(Constant.SWITCH_SOUND, true);
+        if (checkSound == true) {
             swSound.setBackgroundResource(R.drawable.ic_on);
 
-        }
-        else {
+        } else {
             swSound.setBackgroundResource(R.drawable.ic_off);
 
         }
@@ -130,11 +132,11 @@ public class SettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     swSound.setBackgroundResource(R.drawable.ic_on);
                     swSound.setChecked(true);
-                    utils.setValue(Constant.SWITCH_SOUND,true);
+                    utils.setValue(Constant.SWITCH_SOUND, true);
                 } else {
                     swSound.setBackgroundResource(R.drawable.ic_off);
                     swSound.setChecked(false);
-                    utils.setValue(Constant.SWITCH_SOUND,false);
+                    utils.setValue(Constant.SWITCH_SOUND, false);
                 }
             }
         });
@@ -143,10 +145,29 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int num = Integer.parseInt(btnNumber.getNumber());
-                utils.setValue(Constant.NUMBER_ENTERED,num);
+                utils.setValue(Constant.NUMBER_ENTERED, num);
 
             }
         });
+
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Ads.f(this);
     }
 
     @OnClick({R.id.layout_change_password, R.id.layout_change_theme, R.id.layout_backup_password})
@@ -184,7 +205,7 @@ public class SettingActivity extends AppCompatActivity {
         };
 
         Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable, 3000);
+        pdCanceller.postDelayed(progressRunnable, 1000);
     }
 
     @Override
@@ -205,7 +226,7 @@ public class SettingActivity extends AppCompatActivity {
             };
 
             Handler pdCanceller = new Handler();
-            pdCanceller.postDelayed(progressRunnable, 3000);
+            pdCanceller.postDelayed(progressRunnable, 1000);
         }
         if (keyCode == event.KEYCODE_HOME) {
             stopService(new Intent(this, AppLockService.class));
